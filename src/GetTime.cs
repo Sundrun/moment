@@ -11,9 +11,8 @@ public class HttpSqlFunction
         _sqlService = sqlService;
     }
 
-    [Function("GetTimeFromDb")]
-    public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "time")] HttpRequestData req)
+    [Function(nameof(GetTime))]
+    public async Task<HttpResponseData> GetTime([HttpTrigger(AuthorizationLevel.Function, "get", Route = "time")] HttpRequestData req)
     {
         var response = req.CreateResponse();
         try
