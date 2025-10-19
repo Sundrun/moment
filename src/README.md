@@ -1,4 +1,4 @@
-# SqlFunctionApp
+# MomentApi
 
 This is a minimal .NET 8 isolated Azure Functions app that demonstrates connecting to an Azure SQL Database using `Microsoft.Data.SqlClient`.
 
@@ -14,7 +14,7 @@ Setup
 3. Copy `local.settings.json.template` to `local.settings.json` and set your database connection string in `SqlConnectionString`.
 
 Run locally
-1. From the `SqlFunctionApp` folder run `dotnet build` to restore packages and build.
+1. From the `MomentApi` folder run `dotnet build` to restore packages and build.
 2. Start the function host with Azure Functions Core Tools or `func start`.
 3. Call the function: `GET http://localhost:7071/api/time` (add function key if required).
 
