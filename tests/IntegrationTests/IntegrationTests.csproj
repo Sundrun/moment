@@ -16,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MomentApi.csproj" />
+    <ProjectReference Include="..\..\src\MomentApi\MomentApi.csproj" />
   </ItemGroup>
 </Project>
