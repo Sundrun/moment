@@ -8,6 +8,9 @@ public static class ModelBuilderMomentOwnerExtension
     public static void BuildMomentOwner(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MomentOwner>()
+            .HasKey(o => o.Id);
+        
+        modelBuilder.Entity<MomentOwner>()
             .Property(e => e.Id)
             .HasConversion(
                 v => v.Id,
