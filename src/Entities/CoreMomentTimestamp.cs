@@ -1,6 +1,3 @@
 ﻿namespace Entities;
 
-public class CoreMomentTimestamp
-{
-    public DateTimeOffset Timestamp { get; set; }
-}
+public record CoreMomentTimestamp(DateTimeOffset Timestamp);

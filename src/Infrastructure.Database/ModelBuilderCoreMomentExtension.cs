@@ -12,14 +12,16 @@ public static class ModelBuilderCoreMomentExtension
         
         modelBuilder.Entity<CoreMoment>()
             .Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Id,
-                v => new CoreMomentId{Id = v});
+                v => new CoreMomentId(v));
 
         modelBuilder.Entity<CoreMoment>()
             .Property(e => e.Timestamp)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Timestamp,
-                v => new CoreMomentTimestamp{Timestamp = v});
+                v => new CoreMomentTimestamp(v));
     }
 }

@@ -1,6 +1,3 @@
 ﻿namespace Entities;
 
-public class MomentOwnerId
-{
-    public Guid Id { get; set; }
-}
+public record MomentOwnerId(Guid Id);

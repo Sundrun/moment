@@ -6,5 +6,5 @@ public class MomentOwnership
     public CoreMomentId MomentId { get; set; }
 
     public MomentOwnerId OwnerId { get; set; }
-    // public CoreMoment CoreMoment { get; set; }
+    public CoreMoment CoreMoment { get; set; }
 }

@@ -21,33 +21,37 @@ public static class ModelBuilderMomentOwnershipExtension
 
         modelBuilder.Entity<MomentOwnership>()
             .Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnershipId{Id = v});
+                v => new MomentOwnershipId(v));
     }
     
     private static void BuildMoment(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MomentOwnership>()
             .Property(e => e.MomentId)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Id,
-                v => new CoreMomentId{Id = v});
+                v => new CoreMomentId(v))
+            .IsRequired();
 
-        // modelBuilder.Entity<MomentOwnership>()
-        //     .HasOne<CoreMoment>(o => o.CoreMoment)
-        //     .WithOne()
-        //     .HasForeignKey<MomentOwnership>(o => o.MomentId);
-        //     // .HasForeignKey<MomentOwnership>(nameof(MomentOwnership.MomentId));
+        modelBuilder.Entity<MomentOwnership>()
+            .HasOne<CoreMoment>(o => o.CoreMoment)
+            .WithOne()
+            .HasForeignKey<MomentOwnership>(o => o.MomentId);
     }
     
     private static void BuildOwner(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MomentOwnership>()
             .Property(e => e.OwnerId)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnerId{Id = v});
+                v => new MomentOwnerId(v))
+            .IsRequired();
 
         // modelBuilder.Entity<MomentOwnership>()
         //     .HasOne<MomentOwner>(o => o.MomentOwner)

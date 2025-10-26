@@ -12,8 +12,9 @@ public static class ModelBuilderMomentOwnerExtension
         
         modelBuilder.Entity<MomentOwner>()
             .Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnerId{Id = v});
+                v => new MomentOwnerId(v));
     }
 }
