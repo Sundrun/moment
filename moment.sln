@@ -4,7 +4,7 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MomentApi", "src\MomentApi.csproj", "{B97045B8-EEEF-D882-10CC-C88BA1053162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "src\tests\IntegrationTests\IntegrationTests.csproj", "{2D7F4A77-9C8C-4A7A-B6D8-3F3B2B6A9C9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "tests\IntegrationTests\IntegrationTests.csproj", "{2D7F4A77-9C8C-4A7A-B6D8-3F3B2B6A9C9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
