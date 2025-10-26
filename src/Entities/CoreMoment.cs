@@ -1,4 +1,6 @@
-﻿namespace Entities;
+﻿using Entities.Wrappers;
+
+namespace Entities;
 
 public record CoreMoment
 {

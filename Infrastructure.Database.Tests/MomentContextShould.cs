@@ -1,5 +1,6 @@
 using AwesomeAssertions;
 using Entities;
+using Entities.Wrappers;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
