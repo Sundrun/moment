@@ -45,7 +45,7 @@ public class MomentContextShould : IAsyncLifetime
         var result = _dbContext.CoreMoments.FirstOrDefault();
         
         // Assert
-        result.Should().Be(expected);
+        result.Should().BeEquivalentTo(expected);
     }
     
     [Fact]
@@ -61,25 +61,30 @@ public class MomentContextShould : IAsyncLifetime
         var result = _dbContext.MomentOwners.FirstOrDefault();
         
         // Assert
-        result.Should().Be(expected);
+        result.Should().BeEquivalentTo(expected);
     }
     
     [Fact]
     public async Task RetrieveExpectedMomentOwnership()
     {
         // Arrange
-        var expected = new MomentOwnership(
-            new MomentOwnershipId(Guid.NewGuid()),
-            new CoreMomentId(Guid.NewGuid()),
-            new MomentOwnerId(Guid.NewGuid()));
+        var moment = new CoreMoment(new CoreMomentId(Guid.NewGuid()), new CoreMomentTimestamp(DateTimeOffset.UtcNow));
+        _dbContext.CoreMoments.Add(moment);
         
+        var owner = new MomentOwner(new MomentOwnerId(Guid.NewGuid()));
+        _dbContext.MomentOwners.Add(owner);
+        
+        var expected = new MomentOwnership(new MomentOwnershipId(Guid.NewGuid()), 
+            moment.Id,
+            owner.Id);
         await _dbContext.MomentOwnerships.AddAsync(expected);
+        
         await _dbContext.SaveChangesAsync();
         
         // Act
         var result = _dbContext.MomentOwnerships.FirstOrDefault();
         
         // Assert
-        result.Should().Be(expected);
+        result.Should().BeEquivalentTo(expected);
     }
 }
