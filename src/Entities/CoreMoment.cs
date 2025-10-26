@@ -1,3 +1,3 @@
 ﻿namespace Entities;
 
-public record CoreMoment(CoreMomentId MomentId, CoreMomentTimestamp Timestamp);
+public record CoreMoment(CoreMomentId Id, CoreMomentTimestamp Timestamp);
