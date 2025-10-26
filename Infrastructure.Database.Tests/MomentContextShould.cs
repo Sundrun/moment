@@ -47,4 +47,20 @@ public class MomentContextShould : IAsyncLifetime
         // Assert
         result.Should().Be(expected);
     }
+    
+    [Fact]
+    public async Task RetrieveExpectedMomentOwner()
+    {
+        // Arrange
+        var expected = new MomentOwner(new MomentOwnerId(Guid.NewGuid()));
+        
+        await _dbContext.MomentOwners.AddAsync(expected);
+        await _dbContext.SaveChangesAsync();
+        
+        // Act
+        var result = _dbContext.MomentOwners.FirstOrDefault();
+        
+        // Assert
+        result.Should().Be(expected);
+    }
 }
