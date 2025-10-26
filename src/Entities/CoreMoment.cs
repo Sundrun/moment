@@ -2,6 +2,6 @@
 
 public record CoreMoment
 {
-    public CoreMomentId Id { get; init; }
-    public CoreMomentTimestamp Timestamp { get; init; }
+    public required CoreMomentId Id { get; init; }
+    public required CoreMomentTimestamp Timestamp { get; init; }
 }

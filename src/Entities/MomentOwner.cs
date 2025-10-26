@@ -2,5 +2,5 @@
 
 public class MomentOwner
 {
-    public MomentOwnerId Id { get; init; } 
+    public required MomentOwnerId Id { get; init; } 
 }
