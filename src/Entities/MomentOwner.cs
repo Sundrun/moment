@@ -2,5 +2,5 @@
 
 public class MomentOwner
 {
-    public MomentOwnerId Id { get; set; } 
+    public MomentOwnerId Id { get; init; } 
 }

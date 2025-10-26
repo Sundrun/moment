@@ -1,7 +1,7 @@
 ﻿namespace Entities;
 
-public class CoreMoment
+public record CoreMoment
 {
-    public CoreMomentId Id { get; set; }
-    public CoreMomentTimestamp Timestamp { get; set; }
+    public CoreMomentId Id { get; init; }
+    public CoreMomentTimestamp Timestamp { get; init; }
 }
