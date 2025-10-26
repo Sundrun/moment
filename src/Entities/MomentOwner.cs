@@ -1,6 +1,6 @@
 ﻿namespace Entities;
 
-public class MomentOwner(MomentOwnerId id)
+public class MomentOwner
 {
-    public MomentOwnerId Id { get; set; } = id;
+    public MomentOwnerId Id { get; set; } 
 }

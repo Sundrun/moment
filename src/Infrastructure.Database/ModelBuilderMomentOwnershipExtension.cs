@@ -23,7 +23,7 @@ public static class ModelBuilderMomentOwnershipExtension
             .Property(e => e.Id)
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnershipId(v));
+                v => new MomentOwnershipId{Id = v});
     }
     
     private static void BuildMoment(ModelBuilder modelBuilder)
@@ -32,13 +32,13 @@ public static class ModelBuilderMomentOwnershipExtension
             .Property(e => e.MomentId)
             .HasConversion(
                 v => v.Id,
-                v => new CoreMomentId(v));
+                v => new CoreMomentId{Id = v});
 
         // modelBuilder.Entity<MomentOwnership>()
         //     .HasOne<CoreMoment>(o => o.CoreMoment)
         //     .WithOne()
-        //     // .HasForeignKey<MomentOwnership>(o => o.MomentId)
-        //     .HasForeignKey<MomentOwnership>(nameof(MomentOwnership.MomentId));
+        //     .HasForeignKey<MomentOwnership>(o => o.MomentId);
+        //     // .HasForeignKey<MomentOwnership>(nameof(MomentOwnership.MomentId));
     }
     
     private static void BuildOwner(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ public static class ModelBuilderMomentOwnershipExtension
             .Property(e => e.OwnerId)
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnerId(v));
+                v => new MomentOwnerId{Id = v});
 
         // modelBuilder.Entity<MomentOwnership>()
         //     .HasOne<MomentOwner>(o => o.MomentOwner)

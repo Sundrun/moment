@@ -1,10 +1,10 @@
 ﻿namespace Entities;
 
-public class MomentOwnership(MomentOwnershipId id, CoreMomentId momentId, MomentOwnerId ownerId)
+public class MomentOwnership
 {
-    public MomentOwnershipId Id { get; set;} = id;
-    public CoreMomentId MomentId { get; set; } = momentId;
+    public MomentOwnershipId Id { get; set;}
+    public CoreMomentId MomentId { get; set; }
 
-    public MomentOwnerId OwnerId { get; set; } = ownerId;
+    public MomentOwnerId OwnerId { get; set; }
     // public CoreMoment CoreMoment { get; set; }
 }

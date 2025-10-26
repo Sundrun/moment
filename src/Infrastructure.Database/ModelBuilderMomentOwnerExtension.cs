@@ -14,6 +14,6 @@ public static class ModelBuilderMomentOwnerExtension
             .Property(e => e.Id)
             .HasConversion(
                 v => v.Id,
-                v => new MomentOwnerId(v));
+                v => new MomentOwnerId{Id = v});
     }
 }
