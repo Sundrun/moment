@@ -1,3 +1,3 @@
 ﻿namespace Entities;
 
-public record MomentOwnership(CoreMomentId MomentId, MomentOwnerId OwnerId);
+public record MomentOwnership(MomentOwnershipId Id, CoreMomentId MomentId, MomentOwnerId OwnerId);
