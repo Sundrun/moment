@@ -38,7 +38,7 @@ public static class ModelBuilderMomentOwnershipExtension
             .IsRequired();
 
         modelBuilder.Entity<MomentOwnership>()
-            .HasOne<CoreMoment>(o => o.CoreMoment)
+            .HasOne<CoreMoment>(o => o.Moment)
             .WithOne()
             .HasForeignKey<MomentOwnership>(o => o.MomentId);
     }
@@ -52,9 +52,9 @@ public static class ModelBuilderMomentOwnershipExtension
                 v => v.Id,
                 v => new MomentOwnerId(v))
             .IsRequired();
-
+        
         // modelBuilder.Entity<MomentOwnership>()
-        //     .HasOne<MomentOwner>(o => o.MomentOwner)
+        //     .HasOne<MomentOwner>(o => o.Owner)
         //     .WithOne()
         //     .HasForeignKey<MomentOwnership>(o => o.OwnerId);
     }

@@ -88,7 +88,10 @@ public class MomentContextShould : IAsyncLifetime
         await _dbContext.SaveChangesAsync();
         
         // Act
-        var result = await _dbContext.MomentOwnerships.Include(x => x.CoreMoment).FirstOrDefaultAsync();
+        var result = await _dbContext.MomentOwnerships
+            .Include(x => x.Moment)
+            .Include(x => x.Owner)
+            .FirstOrDefaultAsync();
         
         // Assert
         result.Should().BeEquivalentTo(expected);
