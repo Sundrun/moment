@@ -3,22 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public class MomentContext : DbContext
+public class MomentContext(DbContextOptions<MomentContext> options) : DbContext(options)
 {
-    public DbSet<CoreMoment> Moments { get; set; }
+    public DbSet<CoreMoment> CoreMoments { get; set; }
     // public DbSet<MomentOwner> MomentOwners { get; set; }
     // public DbSet<MomentOwnership> MomentOwnerships { get; set; }
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var connectionString = Environment.GetEnvironmentVariable("SqlConnectionString");
-        if (string.IsNullOrEmpty(connectionString))
-        {
-            throw new InvalidOperationException("SqlConnectionString is not configured.");
-        }
-        
-        optionsBuilder.UseSqlServer(connectionString);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,6 +23,6 @@ public class MomentContext : DbContext
                 v => v.Timestamp,
                 v => new CoreMomentTimestamp(v));
         
-        // base.OnModelCreating(modelBuilder); // TODO is this needed?
+        base.OnModelCreating(modelBuilder);
     }
 }

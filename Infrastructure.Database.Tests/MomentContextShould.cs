@@ -1,5 +1,6 @@
 using AwesomeAssertions;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
 namespace Infrastructure.Database.Tests;
@@ -7,15 +8,23 @@ namespace Infrastructure.Database.Tests;
 public class MomentContextShould : IAsyncLifetime
 {
     private MsSqlContainer _msSqlContainer = null!;
+    private MomentContext _dbContext = null!;
     
     public async Task InitializeAsync()
     {
-        _msSqlContainer = new MsSqlBuilder().Build();
+        _msSqlContainer = new MsSqlBuilder()
+            .WithPortBinding(1433)
+            .Build();
 
         await _msSqlContainer.StartAsync();
             
         var connectionString = _msSqlContainer.GetConnectionString();
-        Environment.SetEnvironmentVariable("SqlConnectionString", connectionString);
+        
+        var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
+            .UseSqlServer(connectionString);
+        
+        _dbContext = new MomentContext(optionsBuilder.Options);
+        await _dbContext.Database.EnsureCreatedAsync();
     }
 
     public async Task DisposeAsync()
@@ -29,12 +38,11 @@ public class MomentContextShould : IAsyncLifetime
         // Arrange
         var expected = new CoreMoment(new CoreMomentId(Guid.NewGuid()), new CoreMomentTimestamp(DateTimeOffset.UtcNow));
         
-        var context = new MomentContext();
-        await context.Moments.AddAsync(expected);
-        await context.SaveChangesAsync();
+        await _dbContext.CoreMoments.AddAsync(expected);
+        await _dbContext.SaveChangesAsync();
         
         // Act
-        var result = context.Moments.FirstOrDefault();
+        var result = _dbContext.CoreMoments.FirstOrDefault();
         
         // Assert
         result.Should().Be(expected);
