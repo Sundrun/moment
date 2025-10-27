@@ -1,14 +1,22 @@
-﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 
 namespace MomentApi;
 
 public class HttpCreateUserFunction
 {
     [Function(nameof(CreateUser))]
-    public IActionResult CreateUser([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+    public HttpResponseData CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
     {
-        return new OkObjectResult("User created successfully.");
+        if (!req.Identities.Any())
+        {
+            return req.CreateResponse(System.Net.HttpStatusCode.Unauthorized);
+        }
+        
+        var identity = req.Identities.First();
+        var principal = new ClaimsPrincipal(identity);
+        
+        return req.CreateResponse(System.Net.HttpStatusCode.OK);
     }
 }
