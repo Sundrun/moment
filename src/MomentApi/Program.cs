@@ -11,7 +11,7 @@ var host = new HostBuilder()
     })
     .ConfigureServices((context, services) =>
     {
-        services.AddSingleton<SqlService>();
+        // services.AddSingleton<SqlService>();
     })
     .ConfigureLogging(logging => logging.AddConsole())
     .Build();
