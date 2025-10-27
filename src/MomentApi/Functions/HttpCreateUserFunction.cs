@@ -20,7 +20,7 @@ public class HttpCreateUserFunction(ICreateUser createUser)
         var principal = new ClaimsPrincipal(identity);
 
         var result = await createUser.CreateAsync(principal);
-        var responseCode = CreateUserResponseToStatusCode.ToStatusCode(result);
+        var responseCode = ToStatusCodeHelper.ToStatusCode(result);
         
         return req.CreateResponse(responseCode);
     }

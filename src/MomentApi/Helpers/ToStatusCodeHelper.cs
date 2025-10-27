@@ -3,7 +3,7 @@ using MomentApi.CreateUser;
 
 namespace MomentApi.Helpers;
 
-public static class CreateUserResponseToStatusCode
+public static class ToStatusCodeHelper
 {
     public static HttpStatusCode ToStatusCode(ICreateUserResponse response) =>
         response switch

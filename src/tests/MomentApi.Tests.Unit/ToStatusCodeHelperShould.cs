@@ -5,7 +5,7 @@ using MomentApi.Helpers;
 
 namespace MomentApi.Tests.Unit;
 
-public class CreateUserResponseToStatusCodeShould
+public class ToStatusCodeHelperShould
 {
     private record UnknownResponse : ICreateUserResponse;
     
@@ -16,7 +16,7 @@ public class CreateUserResponseToStatusCodeShould
         var response = new UserCreated();
 
         // Act
-        var result = CreateUserResponseToStatusCode.ToStatusCode(response);
+        var result = ToStatusCodeHelper.ToStatusCode(response);
 
         // Assert
         result.Should().Be(HttpStatusCode.Created);
@@ -29,7 +29,7 @@ public class CreateUserResponseToStatusCodeShould
         var response = new UserExists();
 
         // Act
-        var result = CreateUserResponseToStatusCode.ToStatusCode(response);
+        var result = ToStatusCodeHelper.ToStatusCode(response);
 
         // Assert
         result.Should().Be(HttpStatusCode.Conflict);
@@ -42,7 +42,7 @@ public class CreateUserResponseToStatusCodeShould
         var response = new UnknownResponse();
 
         // Act
-        var result = CreateUserResponseToStatusCode.ToStatusCode(response);
+        var result = ToStatusCodeHelper.ToStatusCode(response);
 
         // Assert
         result.Should().Be(HttpStatusCode.InternalServerError);
