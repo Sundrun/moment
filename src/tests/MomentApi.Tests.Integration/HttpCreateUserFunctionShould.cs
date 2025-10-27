@@ -34,18 +34,13 @@ public class HttpCreateUserFunctionShould
     }
     
     [Fact]
-    public void IndicateUnauthorizedWhenInvalidIdentityIsProvided()
+    public void IndicateUnauthorizedWhenNoIdentityIsProvided()
     {
         // Arrange
         var func = new HttpCreateUserFunction();
         
-        var oidClaim = new Claim("oid", "02223b6b-aa1d-42d4-9ec0-1b2bb9194438");
-        var userNameClaim = new Claim(ClaimTypes.Name, "tester");
-        var claimsIdentity = new ClaimsIdentity([oidClaim, userNameClaim], "TestAuthentication");
-        
         var context = Substitute.For<FunctionContext>();
         var httpRequest = Substitute.For<HttpRequestData>(context);
-        httpRequest.Identities.Returns([claimsIdentity]);
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
         httpRequest.CreateResponse().Returns(httpResponse);
