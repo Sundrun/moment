@@ -11,13 +11,10 @@ public class HttpCreateUserFunction(ICreateUser createUser)
     [Function(nameof(CreateUserAsync))]
     public async Task<HttpResponseData> CreateUserAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
     {
-        if (!req.Identities.Any())
+        if (!ToClaimsPrincipalHelper.TryConvertToClaimsPrincipal(req, out var principal))
         {
             return req.CreateResponse(System.Net.HttpStatusCode.Unauthorized);
         }
-        
-        var identity = req.Identities.First();
-        var principal = new ClaimsPrincipal(identity);
 
         var result = await createUser.CreateAsync(principal);
         var responseCode = ToStatusCodeHelper.ToStatusCode(result);
