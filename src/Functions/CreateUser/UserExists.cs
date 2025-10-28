@@ -1,3 +1,3 @@
-﻿namespace MomentApi.CreateUser;
+﻿namespace Functions.CreateUser;
 
 public record UserExists : ICreateUserResponse;

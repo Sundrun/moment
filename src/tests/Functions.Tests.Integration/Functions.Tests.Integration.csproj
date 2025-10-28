@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\MomentApi\MomentApi.csproj" />
+      <ProjectReference Include="..\..\Functions\Functions.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace MomentApi.CreateUser;
+namespace Functions.CreateUser;
 
 public interface ICreateUser
 {

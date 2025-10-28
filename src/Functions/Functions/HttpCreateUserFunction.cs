@@ -1,10 +1,9 @@
-﻿using System.Security.Claims;
+﻿using Functions.CreateUser;
+using Functions.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using MomentApi.CreateUser;
-using MomentApi.Helpers;
 
-namespace MomentApi.Functions;
+namespace Functions.Functions;
 
 public class HttpCreateUserFunction(ICreateUser createUser)
 {

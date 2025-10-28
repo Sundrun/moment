@@ -1,17 +1,17 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Persistence;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
-    .ConfigureAppConfiguration((context, config) =>
+    .ConfigureAppConfiguration((_, config) =>
     {
         config.AddEnvironmentVariables();
     })
-    .ConfigureServices((context, services) =>
+    .ConfigureServices((_, services) =>
     {
-        // services.AddSingleton<SqlService>();
+        services.AddPersistenceServices();
     })
     .ConfigureLogging(logging => logging.AddConsole())
     .Build();

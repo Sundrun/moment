@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace MomentApi.Helpers;
+namespace Functions.Helpers;
 
 public static class ToClaimsPrincipalHelper
 {

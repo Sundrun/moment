@@ -1,9 +1,9 @@
 using System.Net;
 using AwesomeAssertions;
-using MomentApi.CreateUser;
-using MomentApi.Helpers;
+using Functions.CreateUser;
+using Functions.Helpers;
 
-namespace MomentApi.Tests.Unit;
+namespace Functions.Tests.Unit;
 
 public class ToStatusCodeHelperShould
 {

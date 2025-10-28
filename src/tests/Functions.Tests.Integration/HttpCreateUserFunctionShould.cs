@@ -1,12 +1,12 @@
 using System.Security.Claims;
 using AwesomeAssertions;
+using Functions.CreateUser;
+using Functions.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using MomentApi.CreateUser;
-using MomentApi.Functions;
 using NSubstitute;
 
-namespace MomentApi.Tests.Integration;
+namespace Functions.Tests.Integration;
 
 public class HttpCreateUserFunctionShould
 {

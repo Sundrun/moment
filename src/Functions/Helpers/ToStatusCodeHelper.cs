@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using MomentApi.CreateUser;
+using Functions.CreateUser;
 
-namespace MomentApi.Helpers;
+namespace Functions.Helpers;
 
 public static class ToStatusCodeHelper
 {

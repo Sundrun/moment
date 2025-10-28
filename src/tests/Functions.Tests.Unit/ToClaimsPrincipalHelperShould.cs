@@ -1,11 +1,11 @@
 ﻿using System.Security.Claims;
 using AwesomeAssertions;
+using Functions.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using MomentApi.Helpers;
 using NSubstitute;
 
-namespace MomentApi.Tests.Unit;
+namespace Functions.Tests.Unit;
 
 public class ToClaimsPrincipalHelperShould
 {
