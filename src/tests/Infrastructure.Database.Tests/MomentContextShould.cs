@@ -37,10 +37,13 @@ public class MomentContextShould : IAsyncLifetime
     public async Task RetrieveExpectedCoreMoment()
     {
         // Arrange
-        var expected = new CoreMoment{Id = new CoreMomentId(Guid.NewGuid()), Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)};
+        var testTimestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow);
         
-        await _dbContext.CoreMoments.AddAsync(expected);
+        var newMoment = new CoreMoment{Timestamp = testTimestamp};
+        await _dbContext.CoreMoments.AddAsync(newMoment);
         await _dbContext.SaveChangesAsync();
+        
+        var expected = new CoreMoment{Id = new CoreMomentId(1), Timestamp = testTimestamp};
         
         // Act
         var result = await _dbContext.CoreMoments.FirstOrDefaultAsync();
@@ -53,10 +56,11 @@ public class MomentContextShould : IAsyncLifetime
     public async Task RetrieveExpectedMomentOwner()
     {
         // Arrange
-        var expected = new MomentOwner{Id = new MomentOwnerId(Guid.NewGuid())};
-        
-        await _dbContext.MomentOwners.AddAsync(expected);
+        var newOwner = new MomentOwner();
+        await _dbContext.MomentOwners.AddAsync(newOwner);
         await _dbContext.SaveChangesAsync();
+
+        var expected = new MomentOwner{Id = new MomentOwnerId(1)};
         
         // Act
         var result = await _dbContext.MomentOwners.FirstOrDefaultAsync();
@@ -69,24 +73,29 @@ public class MomentContextShould : IAsyncLifetime
     public async Task RetrieveExpectedMomentOwnership()
     {
         // Arrange
-        var moment = new CoreMoment
-        {
-            Id = new CoreMomentId(Guid.NewGuid()),
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
-        _dbContext.CoreMoments.Add(moment);
+        var newMoment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
+        _dbContext.CoreMoments.Add(newMoment);
         
-        var owner = new MomentOwner { Id = new MomentOwnerId(Guid.NewGuid()) };
-        _dbContext.MomentOwners.Add(owner);
-        
-        var expected = new MomentOwnership{
-            Id = new MomentOwnershipId(Guid.NewGuid()), 
-            MomentId = moment.Id,
-            OwnerId = owner.Id
-        };
-        
-        await _dbContext.MomentOwnerships.AddAsync(expected);
+        var newOwner = new MomentOwner();
+        _dbContext.MomentOwners.Add(newOwner);
         await _dbContext.SaveChangesAsync();
+        
+        var storedMoment = await _dbContext.CoreMoments.FirstOrDefaultAsync();
+        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        
+        var newOwnership = new MomentOwnership{ MomentId = storedMoment!.Id, OwnerId = storedOwner!.Id };
+        
+        await _dbContext.MomentOwnerships.AddAsync(newOwnership);
+        await _dbContext.SaveChangesAsync();
+
+        var expected = new MomentOwnership
+        {
+            Id = new MomentOwnershipId(1),
+            MomentId = storedMoment.Id,
+            Moment = storedMoment,
+            OwnerId = storedOwner.Id,
+            Owner = storedOwner
+        };
         
         // Act
         var result = await _dbContext.MomentOwnerships

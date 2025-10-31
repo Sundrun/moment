@@ -13,7 +13,7 @@ public static class ModelBuilderCoreMomentExtension
         
         modelBuilder.Entity<CoreMoment>()
             .Property(e => e.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 v => v.Id,
                 v => new CoreMomentId(v));

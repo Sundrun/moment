@@ -1,3 +1,3 @@
 ﻿namespace Entities.Wrappers;
 
-public record CoreMomentId(Guid Id);
+public record CoreMomentId(long Id);

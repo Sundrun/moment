@@ -22,7 +22,7 @@ public static class ModelBuilderMomentOwnershipExtension
 
         modelBuilder.Entity<MomentOwnership>()
             .Property(e => e.Id)
-            .ValueGeneratedNever()
+            .ValueGeneratedOnAdd()
             .HasConversion(
                 v => v.Id,
                 v => new MomentOwnershipId(v));
@@ -53,10 +53,5 @@ public static class ModelBuilderMomentOwnershipExtension
                 v => v.Id,
                 v => new MomentOwnerId(v))
             .IsRequired();
-        
-        // modelBuilder.Entity<MomentOwnership>()
-        //     .HasOne<MomentOwner>(o => o.Owner)
-        //     .WithOne()
-        //     .HasForeignKey<MomentOwnership>(o => o.OwnerId);
     }
 }

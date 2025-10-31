@@ -1,3 +1,3 @@
 ﻿namespace Entities.Wrappers;
 
-public record MomentOwnershipId(Guid Id);
+public record MomentOwnershipId(long Id);

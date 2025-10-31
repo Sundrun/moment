@@ -4,5 +4,5 @@ namespace Entities;
 
 public class MomentOwner
 {
-    public required MomentOwnerId Id { get; init; } 
+    public MomentOwnerId Id { get; init; } = null!;
 }
