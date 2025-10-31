@@ -82,4 +82,25 @@ public class SecurityTokenHelperShould
         // Assert
         result.Should().BeTrue();
     }
+    
+    [Fact]
+    public void ExtractExpectedToken()
+    {
+        // Arrange
+        var expected = "myTestToken";
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", $"Bearer {expected}" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        // Act
+        httpRequest.TryExtractToken(out var result);
+        
+        // Assert
+        result.Should().Be(expected);
+    }
 }
