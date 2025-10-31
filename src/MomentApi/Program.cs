@@ -15,8 +15,6 @@ var host = new HostBuilder()
         services.AddAuthenticationServices();
         services.AddPersistenceServices();
 
-        var tmp = context.Configuration.GetValue<string>("Google:ClientId");
-
         // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //     .AddJwtBearer(options =>
         //     {
