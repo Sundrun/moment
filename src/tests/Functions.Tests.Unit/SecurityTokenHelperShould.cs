@@ -42,4 +42,24 @@ public class SecurityTokenHelperShould
         // Assert
         result.Should().BeFalse();
     }
+    
+    [Fact]
+    public void IndicateFailureWhenAuthenticationIsNotOfBearerType()
+    {
+        // Arrange
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", "Basic myTestToken" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        // Act
+        var result = httpRequest.TryExtractToken(out _);
+        
+        // Assert
+        result.Should().BeFalse();
+    }
 }
