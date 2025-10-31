@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Database.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Integration", "src\tests\Functions.Tests.Integration\Functions.Tests.Integration.csproj", "{F2EEB375-9CB6-4A78-BFD9-7F2F7E8B64CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Jwt", "src\Infrastructure.Jwt\Infrastructure.Jwt.csproj", "{7471A7F4-6ABD-4B87-90CE-591A98AA6EF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Authentication", "src\Infrastructure.Authentication\Infrastructure.Authentication.csproj", "{7471A7F4-6ABD-4B87-90CE-591A98AA6EF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Unit", "src\tests\Functions.Tests.Unit\Functions.Tests.Unit.csproj", "{78413312-2027-4FCD-BDD8-568FA75B0C16}"
 EndProject
