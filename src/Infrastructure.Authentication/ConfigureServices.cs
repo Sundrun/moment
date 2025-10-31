@@ -1,5 +1,4 @@
-﻿using Functions;
-using Functions.ValidateToken;
+﻿using Functions.ValidateToken;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Authentication;

@@ -1,10 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Functions;
-using Functions.ValidateToken;
+﻿using Functions.ValidateToken;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Authentication;
 
