@@ -26,7 +26,5 @@ public static class SecurityTokenHelper
         
         token = authHeader.Substring("Bearer ".Length).Trim();
         return true;
-        
-        // TODO test this
     }
 }
