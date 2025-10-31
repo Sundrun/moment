@@ -24,6 +24,6 @@ public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser cr
         }
 
         var userId = validToken.Subject;
-        return request.CreateResponse(HttpStatusCode.OK);
+        return request.CreateResponse(HttpStatusCode.Created);
     }
 }

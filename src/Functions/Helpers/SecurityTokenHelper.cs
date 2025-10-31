@@ -1,15 +1,17 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Azure.Functions.Worker.Http;
+﻿using Microsoft.Azure.Functions.Worker.Http;
 
 namespace Functions.Helpers;
 
 public static class SecurityTokenHelper
 {
-    private static readonly JwtSecurityTokenHandler TokenHandler = new();
-    
     public static bool TryExtractToken(this HttpRequestData request, out string token)
     {
         token = null!;
+
+        if (!request.Headers.Any())
+        {
+            return false;
+        }
         
         if (!request.Headers.TryGetValues("Authorization", out var authHeaderValues))
         {
