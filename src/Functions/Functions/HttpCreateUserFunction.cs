@@ -2,6 +2,7 @@
 using Functions.CreateUser;
 using Functions.Extensions;
 using Functions.Helpers;
+using Functions.ValidateToken;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.IdentityModel.Tokens;
@@ -18,32 +19,13 @@ public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser cr
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
 
-        TokenValidationResult validationResult;
-        try
+        var validationResult = await validateToken.ValidateTokenAsync(token);
+        if (validationResult is not ValidToken validToken)
         {
-            validationResult =  await validateToken.ValidateTokenAsync(token);
-        }
-        catch (SecurityTokenExpiredException)
-        {
-            return request.CreateResponse(HttpStatusCode.Unauthorized, "Token has expired.");
-        }
-        catch (Exception ex)
-        {
-            return request.CreateResponse(HttpStatusCode.Unauthorized, $"Token validation failed: {ex.Message}");
-        }
-        
-        if (!validationResult.IsValid)
-        {
-            return request.CreateResponse(HttpStatusCode.Unauthorized, "Invalid token.");
+            return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
 
-        var identity = validationResult.ClaimsIdentity;
+        var userId = validToken.Subject;
         return request.CreateResponse(HttpStatusCode.OK);
-        
-        
-        // var result = await createUser.CreateAsync(principal);
-        // var responseCode = ToStatusCodeHelper.ToStatusCode(result);
-        //
-        // return request.CreateResponse(responseCode);
     }
 }

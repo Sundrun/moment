@@ -1,6 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Functions;
+using Functions.ValidateToken;
+using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -8,27 +10,30 @@ namespace Infrastructure.Authentication;
 
 public class ValidateToken : IValidateToken
 {
-    private readonly JwtSecurityTokenHandler _tokenHandler = new();
-    private readonly TokenValidationParameters _validationParameters;
+    private readonly GoogleJsonWebSignature.ValidationSettings _validationSettings;
 
     public ValidateToken(IConfiguration config)
     {
         var googleConfig = config.GetSection("Google");
         var clientId = googleConfig.GetValue<string>("ClientId")!;
-        var clientSecret = googleConfig.GetValue<string>("ClientSecret")!;
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clientSecret));
         
-        _validationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidIssuer = "https://accounts.google.com",
-            ValidateAudience = true,
-            ValidAudience = clientId,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = signingKey
+        _validationSettings = new GoogleJsonWebSignature.ValidationSettings() 
+        { 
+            Audience = new List<string>() { clientId } 
         };
     }
 
-    public Task<TokenValidationResult> ValidateTokenAsync(SecurityToken token) => _tokenHandler.ValidateTokenAsync(token, _validationParameters);
+    public async Task<IValidatedToken> ValidateTokenAsync(string token)
+    {
+        try
+        {
+            var validatedToken = await GoogleJsonWebSignature.ValidateAsync(token, _validationSettings);
+
+            return new ValidToken(validatedToken.Subject);
+        }
+        catch
+        {
+            return new InvalidToken();
+        }
+    }
 }

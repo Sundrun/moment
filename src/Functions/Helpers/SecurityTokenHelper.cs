@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Functions.Helpers;
 
@@ -8,7 +7,7 @@ public static class SecurityTokenHelper
 {
     private static readonly JwtSecurityTokenHandler TokenHandler = new();
     
-    public static bool TryExtractToken(this HttpRequestData request, out SecurityToken token)
+    public static bool TryExtractToken(this HttpRequestData request, out string token)
     {
         token = null!;
         
@@ -23,9 +22,7 @@ public static class SecurityTokenHelper
             return false;
         }
         
-        var jwtString = authHeader.Substring("Bearer ".Length).Trim();
-
-        token = TokenHandler.ReadJwtToken(jwtString);
+        token = authHeader.Substring("Bearer ".Length).Trim();
         return true;
         
         // TODO test this

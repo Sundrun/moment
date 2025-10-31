@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Functions\Functions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
+    </ItemGroup>
+
 </Project>
