@@ -76,8 +76,7 @@ public class MomentContextShould : IAsyncLifetime
         var newMoment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
         _dbContext.CoreMoments.Add(newMoment);
         
-        var newOwner = new MomentOwner();
-        _dbContext.MomentOwners.Add(newOwner);
+        _dbContext.MomentOwners.Add(new MomentOwner());
         await _dbContext.SaveChangesAsync();
         
         var storedMoment = await _dbContext.CoreMoments.FirstOrDefaultAsync();
