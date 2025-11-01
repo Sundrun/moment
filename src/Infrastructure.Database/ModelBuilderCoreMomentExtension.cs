@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public static class ModelBuilderCoreMomentExtension
+internal static class ModelBuilderCoreMomentExtension
 {
-    public static void BuildCoreMoment(this ModelBuilder modelBuilder)
+    internal static void BuildCoreMoment(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CoreMoment>()
             .HasKey(o => o.Id);

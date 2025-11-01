@@ -1,4 +1,5 @@
-﻿using Functions.ValidateToken;
+﻿using Entities.Wrappers;
+using Functions.ValidateToken;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 
@@ -25,7 +26,8 @@ public class ValidateToken : IValidateToken
         {
             var validatedToken = await GoogleJsonWebSignature.ValidateAsync(token, _validationSettings);
 
-            return new ValidToken(validatedToken.Subject);
+            var subject = new OwnerGoogleIdentitySubject(validatedToken.Subject);
+            return new ValidToken(subject);
         }
         catch
         {

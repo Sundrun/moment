@@ -14,6 +14,7 @@ jobs:
           Functions.Tests.Integration,
           Functions.Tests.Unit,
           Infrastructure.Database.Tests,
+          Persistence.Tests.Integration,
         ]
 
     steps:

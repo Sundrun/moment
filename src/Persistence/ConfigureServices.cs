@@ -1,13 +1,33 @@
 ﻿using Functions.CreateUser;
+using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Persistence;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
+    public static void AddPersistenceServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSingleton<ICreateUser, CreateUser>();
-        return services;
+        services.AddTransient<MomentContext>(_ =>
+        {
+            var connectionString = config.GetConnectionString("MomentContext");
+            
+            var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
+                .UseSqlServer(connectionString);
+
+            var context = new MomentContext(optionsBuilder.Options);
+
+            var isLocal = config.GetValue<bool>("Application:IsDevelopment");
+            if (isLocal)
+            {
+                context.Database.EnsureCreated();
+            }
+
+            return context;
+        });
+        
+        services.AddTransient<ICreateUser, CreateUser>();
     }
 }
