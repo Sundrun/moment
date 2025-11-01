@@ -1,15 +1,19 @@
 ﻿using System.Security.Claims;
+using Entities;
 using Functions.CreateUser;
 using Functions.ValidateToken;
+using Infrastructure.Database;
 
 namespace Persistence;
 
-public class CreateUser : ICreateUser
+public class CreateUser(MomentContext context) : ICreateUser
 {
-    private record NotImplementedResponse : ICreateUserResponse;
     
-    public Task<ICreateUserResponse> CreateAsync(ValidToken token)
+    public async Task<ICreateUserResponse> CreateAsync(ValidToken token)
     {
-        return Task.FromResult<ICreateUserResponse>(new NotImplementedResponse());
+        await context.MomentOwners.AddAsync(new MomentOwner());
+        await context.SaveChangesAsync();
+
+        return new UserCreated();
     }
 }

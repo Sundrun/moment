@@ -1,4 +1,5 @@
 using AwesomeAssertions;
+using Functions.CreateUser;
 using Functions.ValidateToken;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +11,10 @@ public class CreateUserShould : IAsyncLifetime
 {
     private CreateUser _dtu = null!;
     private MsSqlContainer _msSqlContainer = null!;
-    private MomentContext _dbContext = null!;
+    private MomentContext _testContext = null!;
     
     public async Task InitializeAsync()
     {
-        _dtu = new CreateUser();
         
         _msSqlContainer = new MsSqlBuilder()
             .WithPortBinding(1433)
@@ -27,8 +27,11 @@ public class CreateUserShould : IAsyncLifetime
         var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
             .UseSqlServer(connectionString);
         
-        _dbContext = new MomentContext(optionsBuilder.Options);
-        await _dbContext.Database.EnsureCreatedAsync();
+        _testContext = new MomentContext(optionsBuilder.Options);
+        await _testContext.Database.EnsureCreatedAsync();
+        
+        var createUserContext = new MomentContext(optionsBuilder.Options);
+        _dtu = new CreateUser(createUserContext);
     }
 
     public async Task DisposeAsync()
@@ -37,13 +40,23 @@ public class CreateUserShould : IAsyncLifetime
     }
     
     [Fact]
-    public async Task AddOwner()
+    public async Task StoreOwner()
     {
         // Act
         await _dtu.CreateAsync(new ValidToken(string.Empty));
-        var result = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        var result = await _testContext.MomentOwners.FirstOrDefaultAsync();
 
         // Assert
         result.Should().NotBeNull();
+    }
+    
+    [Fact]
+    public async Task IndicateThatAOwnerWasCreated()
+    {
+        // Act
+        var result = await _dtu.CreateAsync(new ValidToken(string.Empty));
+
+        // Assert
+        result.Should().BeOfType<UserCreated>();
     }
 }
