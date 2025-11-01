@@ -17,7 +17,15 @@ public static class ConfigureServices
             var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
                 .UseSqlServer(connectionString);
 
-            return new MomentContext(optionsBuilder.Options);
+            var context = new MomentContext(optionsBuilder.Options);
+
+            var isLocal = config.GetValue<bool>("Application:IsDevelopment");
+            if (isLocal)
+            {
+                context.Database.EnsureCreated();
+            }
+
+            return context;
         });
         
         services.AddTransient<ICreateUser, CreateUser>();
