@@ -13,42 +13,7 @@ var host = new HostBuilder()
     .ConfigureServices((context, services) =>
     {
         services.AddAuthenticationServices();
-        services.AddPersistenceServices();
-
-        // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //     .AddJwtBearer(options =>
-        //     {
-        //         var googleConfig = context.Configuration.GetSection("Google");
-        //         var clientId = googleConfig.GetValue<string>("ClientId")!;
-        //         var clientSecret = googleConfig.GetValue<string>("ClientSecret")!;
-        //         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clientSecret));
-        //         
-        //         // options.Authority = "https://accounts.google.com";
-        //         // options.Audience = clientId;
-        //         
-        //         options.TokenValidationParameters = new TokenValidationParameters
-        //         {
-        //             ValidateIssuer = true,
-        //             ValidIssuer = "https://accounts.google.com",
-        //             ValidateAudience = true,
-        //             ValidAudience = clientId,
-        //             ValidateLifetime = true,
-        //             ValidateIssuerSigningKey = true,
-        //             IssuerSigningKey = signingKey
-        //         };
-        //         
-        //         // options.TokenValidationParameters = new TokenValidationParameters
-        //         // {
-        //         //     ValidateIssuer = true,
-        //         //     ValidateAudience = true,
-        //         //     ValidateLifetime = true,
-        //         //     ValidateIssuerSigningKey = true,
-        //         //     ValidIssuer = "your_issuer",
-        //         //     ValidAudience = "your_audience",
-        //         //     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key"))
-        //         // };
-        //     });
-
+        services.AddPersistenceServices(context.Configuration);
     })
     .ConfigureLogging(logging => logging.AddConsole())
     .Build();
