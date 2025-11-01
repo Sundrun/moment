@@ -135,7 +135,7 @@ public class HttpCreateUserGoogleFunctionShould
     }
     
     [Fact]
-    public async Task IndicateErrorWhenUnknownUserCreatedResultIsUnexpected()
+    public async Task IndicateErrorWhenUserCreatedResultIsUnexpected()
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();

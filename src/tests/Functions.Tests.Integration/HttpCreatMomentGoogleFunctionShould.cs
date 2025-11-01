@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using AwesomeAssertions;
 using Entities.Wrappers;
+using Functions.CreateMoment;
 using Functions.CreateUser;
 using Functions.Functions;
 using Functions.ValidateToken;
@@ -13,14 +14,18 @@ namespace Functions.Tests.Integration;
 
 public class HttpCreateMomentGoogleFunctionShould
 {
+    private record TestCreateMomentResponse : ICreateMomentResponse;
+    
     [Fact]
     public async Task IndicateUnauthorizedWhenNoTokenIsProvided()
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new InvalidToken());
+
+        var createMoment = Substitute.For<ICreateMoment>();
         
-        var func = new HttpCreateMomentGoogle(validateToken);
+        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
         
         var context = Substitute.For<FunctionContext>();
         var httpRequest = Substitute.For<HttpRequestData>(context);
@@ -38,13 +43,16 @@ public class HttpCreateMomentGoogleFunctionShould
     }
     
     [Fact]
-    public async Task IndicateSuccessWhenIdentityIsValid()
+    public async Task IndicateSuccessWhenMomentWasAdded()
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
-        var func = new HttpCreateMomentGoogle(validateToken);
+        var createMoment = Substitute.For<ICreateMoment>();
+        createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new MomentCreated());
+        
+        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
         
         var headers = new Dictionary<string, string>
         {
@@ -73,7 +81,9 @@ public class HttpCreateMomentGoogleFunctionShould
         var validateToken = Substitute.For<IValidateToken>();
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new InvalidToken());
         
-        var func = new HttpCreateMomentGoogle(validateToken);
+        var createMoment = Substitute.For<ICreateMoment>();
+        
+        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
         
         var headers = new Dictionary<string, string>
         {
@@ -95,98 +105,35 @@ public class HttpCreateMomentGoogleFunctionShould
         result.Should().Be(System.Net.HttpStatusCode.Unauthorized);
     }
     
+    [Fact]
+    public async Task IndicateErrorWhenUserCreatedResultIsUnexpected()
+    {
+        // Arrange
+        var validateToken = Substitute.For<IValidateToken>();
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
+        
+        var createMoment = Substitute.For<ICreateMoment>();
+        createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateMomentResponse());
+        
+        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
+        
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", "Bearer myTestToken" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpRequest.CreateResponse().Returns(httpResponse);
     
-    //
-    // [Fact]
-    // public async Task IndicateConflictIfUserAlreadyExists()
-    // {
-    //     // Arrange
-    //     var validateToken = Substitute.For<IValidateToken>();
-    //     validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
-    //     
-    //     var createUser = Substitute.For<ICreateUser>();
-    //     createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserExists());
-    //     var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
-    //     
-    //     var headers = new Dictionary<string, string>
-    //     {
-    //         { "Authorization", "Bearer myTestToken" },
-    //     };
-    //     
-    //     var context = Substitute.For<FunctionContext>();
-    //     var httpRequest = Substitute.For<HttpRequestData>(context);
-    //     httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
-    //     
-    //     var httpResponse = Substitute.For<HttpResponseData>(context);
-    //     httpRequest.CreateResponse().Returns(httpResponse);
-    //
-    //     // Act
-    //     var response = await func.CreateUserGoogle(httpRequest);
-    //     var result = response.StatusCode;
-    //
-    //     // Assert
-    //     result.Should().Be(System.Net.HttpStatusCode.Conflict);
-    // }
-    //
-    // [Fact]
-    // public async Task IndicateErrorWhenUnknownUserCreatedResultIsUnexpected()
-    // {
-    //     // Arrange
-    //     var validateToken = Substitute.For<IValidateToken>();
-    //     validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
-    //     
-    //     var createUser = Substitute.For<ICreateUser>();
-    //     createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateUserResult());
-    //     var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
-    //     
-    //     var headers = new Dictionary<string, string>
-    //     {
-    //         { "Authorization", "Bearer myTestToken" },
-    //     };
-    //     
-    //     var context = Substitute.For<FunctionContext>();
-    //     var httpRequest = Substitute.For<HttpRequestData>(context);
-    //     httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
-    //     
-    //     var httpResponse = Substitute.For<HttpResponseData>(context);
-    //     httpRequest.CreateResponse().Returns(httpResponse);
-    //
-    //     // Act
-    //     var response = await func.CreateUserGoogle(httpRequest);
-    //     var result = response.StatusCode;
-    //
-    //     // Assert
-    //     result.Should().Be(System.Net.HttpStatusCode.InternalServerError);
-    // }
-    //
-    // [Fact]
-    // public async Task IndicateErrorWhenNoUserCreatedResultIsGenerated()
-    // {
-    //     // Arrange
-    //     var validateToken = Substitute.For<IValidateToken>();
-    //     validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
-    //     
-    //     var createUser = Substitute.For<ICreateUser>();
-    //     createUser.CreateAsync(Arg.Any<ValidToken>()).ReturnsNull();
-    //     var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
-    //     
-    //     var headers = new Dictionary<string, string>
-    //     {
-    //         { "Authorization", "Bearer myTestToken" },
-    //     };
-    //     
-    //     var context = Substitute.For<FunctionContext>();
-    //     var httpRequest = Substitute.For<HttpRequestData>(context);
-    //     httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
-    //     
-    //     var httpResponse = Substitute.For<HttpResponseData>(context);
-    //     httpRequest.CreateResponse().Returns(httpResponse);
-    //
-    //     // Act
-    //     var response = await func.CreateUserGoogle(httpRequest);
-    //     var result = response.StatusCode;
-    //
-    //     // Assert
-    //     result.Should().Be(System.Net.HttpStatusCode.InternalServerError);
-    // }
+        // Act
+        var response = await func.CreateMomentGoogle(httpRequest);
+        var result = response.StatusCode;
+    
+        // Assert
+        result.Should().Be(System.Net.HttpStatusCode.InternalServerError);
+    }
 }
