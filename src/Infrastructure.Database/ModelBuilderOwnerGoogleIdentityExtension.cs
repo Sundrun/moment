@@ -40,6 +40,10 @@ internal static class ModelBuilderOwnerGoogleIdentityExtension
     private static void BuildSubject(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<OwnerGoogleIdentity>()
+            .HasIndex(e => e.Subject)
+            .IsUnique();
+        
+        modelBuilder.Entity<OwnerGoogleIdentity>()
             .Property(e => e.Subject)
             .ValueGeneratedNever()
             .HasConversion(
