@@ -26,7 +26,7 @@ public class ValidateToken : IValidateToken
         {
             var validatedToken = await GoogleJsonWebSignature.ValidateAsync(token, _validationSettings);
 
-            var subject = new OwnerGoogleIdentitySubject(validatedToken.Subject);
+            var subject = new GoogleIdentitySubject(validatedToken.Subject);
             return new ValidToken(subject);
         }
         catch

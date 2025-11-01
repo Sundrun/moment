@@ -20,12 +20,17 @@ public class CreateUser(MomentContext context) : ICreateUser
         var owner = new MomentOwner();
         await context.MomentOwners.AddAsync(owner);
         
-        var identity = new OwnerGoogleIdentity
+        var identity = new GoogleIdentity
+        {
+            Subject = token.Subject,
+        };
+        var identityOwner = new GoogleIdentityOwner
         {
             Owner = owner,
-            Subject = token.Subject
+            GoogleIdentity = identity
         };
-        await context.OwnerGoogleIdentities.AddAsync(identity);
+        await context.GoogleIdentities.AddAsync(identity);
+        await context.GoogleIdentityOwners.AddAsync(identityOwner);
         
         await context.SaveChangesAsync();
 
@@ -34,7 +39,7 @@ public class CreateUser(MomentContext context) : ICreateUser
     
     private bool HasAlreadyBeenCreated(ValidToken token)
     {
-        var existingIdentity = context.OwnerGoogleIdentities
+        var existingIdentity = context.GoogleIdentities
             .FirstOrDefault(i => i.Subject == token.Subject);
 
         return existingIdentity != null;

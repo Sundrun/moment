@@ -20,7 +20,7 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserCreated());
@@ -108,7 +108,7 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserExists());
@@ -139,7 +139,7 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateUserResult());
@@ -170,7 +170,7 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).ReturnsNull();
