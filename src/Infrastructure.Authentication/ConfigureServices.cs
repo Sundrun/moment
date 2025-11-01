@@ -5,9 +5,8 @@ namespace Infrastructure.Authentication;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddAuthenticationServices(this IServiceCollection services)
+    public static void AddAuthenticationServices(this IServiceCollection services)
     {
         services.AddTransient<IValidateToken, ValidateToken>();
-        return services;
     }
 }
