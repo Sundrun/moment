@@ -89,9 +89,9 @@ public class MomentContextShould : IAsyncLifetime
         var expected = new MomentOwnership
         {
             Id = new MomentOwnershipId(1),
-            MomentId = storedMoment.Id,
+            MomentId = storedMoment!.Id,
             Moment = storedMoment,
-            OwnerId = storedOwner.Id,
+            OwnerId = storedOwner!.Id,
             Owner = storedOwner
         };
         
