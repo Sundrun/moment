@@ -22,8 +22,13 @@ public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser cr
         {
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
-
-        var userId = validToken.Subject;
-        return request.CreateResponse(HttpStatusCode.Created);
+        
+        var createUserResult =  await createUser.CreateAsync(validToken);
+        return createUserResult switch
+        {
+            UserExists => request.CreateResponse(HttpStatusCode.Conflict),
+            UserCreated => request.CreateResponse(HttpStatusCode.Created),
+            _ => request.CreateResponse(HttpStatusCode.InternalServerError)
+        };
     }
 }
