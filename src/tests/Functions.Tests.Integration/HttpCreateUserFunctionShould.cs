@@ -35,7 +35,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUserAsync(httpRequest);
+        var response = await func.CreateUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -66,7 +66,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUserAsync(httpRequest);
+        var response = await func.CreateUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -92,7 +92,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUserAsync(httpRequest);
+        var response = await func.CreateUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -123,7 +123,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUserAsync(httpRequest);
+        var response = await func.CreateUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert

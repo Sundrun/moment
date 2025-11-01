@@ -73,20 +73,19 @@ public class MomentContextShould : IAsyncLifetime
     public async Task RetrieveExpectedMomentOwnership()
     {
         // Arrange
+        _dbContext.MomentOwners.Add(new MomentOwner());
+        await _dbContext.SaveChangesAsync();
+        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        
         var newMoment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
         _dbContext.CoreMoments.Add(newMoment);
         
-        _dbContext.MomentOwners.Add(new MomentOwner());
+        var newOwnership = new MomentOwnership{ Moment = newMoment, Owner = storedOwner!};
+        await _dbContext.MomentOwnerships.AddAsync(newOwnership);
         await _dbContext.SaveChangesAsync();
         
         var storedMoment = await _dbContext.CoreMoments.FirstOrDefaultAsync();
-        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
         
-        var newOwnership = new MomentOwnership{ MomentId = storedMoment!.Id, OwnerId = storedOwner!.Id };
-        
-        await _dbContext.MomentOwnerships.AddAsync(newOwnership);
-        await _dbContext.SaveChangesAsync();
-
         var expected = new MomentOwnership
         {
             Id = new MomentOwnershipId(1),

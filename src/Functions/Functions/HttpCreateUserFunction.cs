@@ -9,8 +9,8 @@ namespace Functions.Functions;
 
 public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser createUser)
 {
-    [Function(nameof(CreateUserAsync))]
-    public async Task<HttpResponseData> CreateUserAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
+    [Function(nameof(CreateUser))]
+    public async Task<HttpResponseData> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
     {
         if (!request.TryExtractToken(out var token))
         {
