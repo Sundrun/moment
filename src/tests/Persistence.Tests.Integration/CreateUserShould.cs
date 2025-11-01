@@ -78,4 +78,50 @@ public class CreateUserShould : IAsyncLifetime
         // Assert
         result.Should().BeEquivalentTo(expected);
     }
+    
+    [Fact]
+    public async Task NotAddNewOwnerIfSubjectAlreadyExists()
+    {
+        // Arrange
+        var subject = new OwnerGoogleIdentitySubject(string.Empty);
+        await _dtu.CreateAsync(new ValidToken(subject));
+        
+        // Act
+        await _dtu.CreateAsync(new ValidToken(subject));
+        var owners = await _testContext.MomentOwners.ToListAsync();
+        var result = owners.Count;
+
+        // Assert
+        result.Should().Be(1);
+    }
+    
+    [Fact]
+    public async Task NotAddNewIdentityIfSubjectAlreadyExists()
+    {
+        // Arrange
+        var subject = new OwnerGoogleIdentitySubject(string.Empty);
+        await _dtu.CreateAsync(new ValidToken(subject));
+        
+        // Act
+        await _dtu.CreateAsync(new ValidToken(subject));
+        var owners = await _testContext.OwnerGoogleIdentities.ToListAsync();
+        var result = owners.Count;
+
+        // Assert
+        result.Should().Be(1);
+    }
+    
+    [Fact]
+    public async Task IndicateIfSubjectAlreadyExists()
+    {
+        // Arrange
+        var subject = new OwnerGoogleIdentitySubject(string.Empty);
+        await _dtu.CreateAsync(new ValidToken(subject));
+        
+        // Act
+        var result = await _dtu.CreateAsync(new ValidToken(subject));
+
+        // Assert
+        result.Should().BeOfType<UserExists>();
+    }
 }
