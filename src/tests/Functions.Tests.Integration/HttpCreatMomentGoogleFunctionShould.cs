@@ -65,37 +65,35 @@ public class HttpCreateMomentGoogleFunctionShould
         // Assert
         result.Should().Be(System.Net.HttpStatusCode.Created);
     }
-    //
-    // [Fact]
-    // public async Task IndicateUnauthorizedWhenTokenIsInvalid()
-    // {
-    //     // Arrange
-    //     var validateToken = Substitute.For<IValidateToken>();
-    //     validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new InvalidToken());
-    //     
-    //     var createUser = Substitute.For<ICreateUser>();
-    //     createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserCreated());
-    //     var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
-    //     
-    //     var headers = new Dictionary<string, string>
-    //     {
-    //         { "Authorization", "Bearer myTestToken" },
-    //     };
-    //     
-    //     var context = Substitute.For<FunctionContext>();
-    //     var httpRequest = Substitute.For<HttpRequestData>(context);
-    //     httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
-    //     
-    //     var httpResponse = Substitute.For<HttpResponseData>(context);
-    //     httpRequest.CreateResponse().Returns(httpResponse);
-    //     
-    //     // Act
-    //     var response = await func.CreateUserGoogle(httpRequest);
-    //     var result = response.StatusCode;
-    //
-    //     // Assert
-    //     result.Should().Be(System.Net.HttpStatusCode.Unauthorized);
-    // }
+    
+    [Fact]
+    public async Task IndicateUnauthorizedWhenTokenIsInvalid()
+    {
+        // Arrange
+        var validateToken = Substitute.For<IValidateToken>();
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new InvalidToken());
+        
+        var func = new HttpCreateMomentGoogle(validateToken);
+        
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", "Bearer myTestToken" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpRequest.CreateResponse().Returns(httpResponse);
+        
+        // Act
+        var response = await func.CreateMomentGoogle(httpRequest);
+        var result = response.StatusCode;
+    
+        // Assert
+        result.Should().Be(System.Net.HttpStatusCode.Unauthorized);
+    }
     
     
     //

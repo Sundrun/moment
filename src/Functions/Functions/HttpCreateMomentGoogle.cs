@@ -16,6 +16,12 @@ public class HttpCreateMomentGoogle(IValidateToken validateToken)
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
+        var validationResult = await validateToken.ValidateTokenAsync(token);
+        if (validationResult is not ValidToken validToken)
+        {
+            return request.CreateResponse(HttpStatusCode.Unauthorized);
+        }
+        
         return request.CreateResponse(HttpStatusCode.Created);
     }
 }
