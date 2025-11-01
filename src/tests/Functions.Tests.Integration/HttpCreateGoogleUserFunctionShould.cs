@@ -11,7 +11,7 @@ using NSubstitute.ReturnsExtensions;
 
 namespace Functions.Tests.Integration;
 
-public class HttpCreateUserFunctionShould
+public class HttpCreateGoogleUserFunctionShould
 {
     private record TestCreateUserResult : ICreateUserResponse;
     
@@ -39,7 +39,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -70,7 +70,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -96,7 +96,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -127,7 +127,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -158,7 +158,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -189,7 +189,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateGoogleUser(httpRequest);
         var result = response.StatusCode;
 
         // Assert
