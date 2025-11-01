@@ -25,11 +25,5 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --no-restore -c Release
-
     - name: Run tests - ${{ matrix.project }}
-      run: dotnet test ./src/tests/${{ matrix.project }} --no-build --verbosity normal
+      run: dotnet test ./src/tests/${{ matrix.project }} -c Release
