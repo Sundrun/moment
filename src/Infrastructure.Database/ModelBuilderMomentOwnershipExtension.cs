@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public static class ModelBuilderMomentOwnershipExtension
+internal static class ModelBuilderMomentOwnershipExtension
 {
-    public static void BuildMomentOwnership(this ModelBuilder modelBuilder)
+    internal static void BuildMomentOwnership(this ModelBuilder modelBuilder)
     {
         BuildId(modelBuilder);
-
         BuildMoment(modelBuilder);
-
         BuildOwner(modelBuilder);
     }
 
