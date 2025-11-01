@@ -7,10 +7,10 @@ using Microsoft.Azure.Functions.Worker.Http;
 
 namespace Functions.Functions;
 
-public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser createUser)
+public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateUser createUser)
 {
-    [Function(nameof(CreateGoogleUser))]
-    public async Task<HttpResponseData> CreateGoogleUser([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
+    [Function(nameof(CreateUserGoogle))]
+    public async Task<HttpResponseData> CreateUserGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
     {
         if (!request.TryExtractToken(out var token))
         {
