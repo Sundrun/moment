@@ -1,3 +1,5 @@
-﻿namespace Functions.ValidateToken;
+﻿using Entities.Wrappers;
 
-public record ValidToken(string Subject) : IValidatedToken;
+namespace Functions.ValidateToken;
+
+public record ValidToken(OwnerGoogleIdentitySubject Subject) : IValidatedToken;

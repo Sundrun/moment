@@ -1,4 +1,5 @@
 using AwesomeAssertions;
+using Entities.Wrappers;
 using Functions.CreateUser;
 using Functions.ValidateToken;
 using Infrastructure.Database;
@@ -43,7 +44,8 @@ public class CreateUserShould : IAsyncLifetime
     public async Task StoreOwner()
     {
         // Act
-        await _dtu.CreateAsync(new ValidToken(string.Empty));
+        var subject = new OwnerGoogleIdentitySubject(string.Empty);
+        await _dtu.CreateAsync(new ValidToken(subject));
         var result = await _testContext.MomentOwners.FirstOrDefaultAsync();
 
         // Assert
@@ -54,9 +56,26 @@ public class CreateUserShould : IAsyncLifetime
     public async Task IndicateThatAOwnerWasCreated()
     {
         // Act
-        var result = await _dtu.CreateAsync(new ValidToken(string.Empty));
+        var subject = new OwnerGoogleIdentitySubject(string.Empty);
+        var result = await _dtu.CreateAsync(new ValidToken(subject));
 
         // Assert
         result.Should().BeOfType<UserCreated>();
+    }
+    
+    [Fact]
+    public async Task StoreGoogleSubject()
+    {
+        // Arrange
+        var expected = new OwnerGoogleIdentitySubject(string.Empty);
+        var token = new ValidToken(expected);
+        
+        // Act
+        await _dtu.CreateAsync(token);
+        var identity = await _testContext.OwnerGoogleIdentities.FirstOrDefaultAsync();
+        var result = identity!.Subject;
+
+        // Assert
+        result.Should().BeEquivalentTo(expected);
     }
 }

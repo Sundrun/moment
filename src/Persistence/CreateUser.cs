@@ -11,7 +11,16 @@ public class CreateUser(MomentContext context) : ICreateUser
     
     public async Task<ICreateUserResponse> CreateAsync(ValidToken token)
     {
-        await context.MomentOwners.AddAsync(new MomentOwner());
+        var owner = new MomentOwner();
+        await context.MomentOwners.AddAsync(owner);
+        
+        var identity = new OwnerGoogleIdentity
+        {
+            Owner = owner,
+            Subject = token.Subject
+        };
+        await context.OwnerGoogleIdentities.AddAsync(identity);
+        
         await context.SaveChangesAsync();
 
         return new UserCreated();
