@@ -1,8 +1,6 @@
-﻿using System.Security.Claims;
-using Entities;
+﻿using Entities;
 using Functions.CreateUser;
 using Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
 using Operations.Commands.CreateUser;
 using Operations.Queries.ValidateToken;
 

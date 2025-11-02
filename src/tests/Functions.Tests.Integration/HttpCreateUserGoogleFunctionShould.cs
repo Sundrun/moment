@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using AwesomeAssertions;
+﻿using AwesomeAssertions;
 using Entities.Wrappers;
 using Functions.CreateUser;
 using Functions.Functions;

@@ -1,13 +1,10 @@
-﻿using System.Security.Claims;
-using AwesomeAssertions;
+﻿using AwesomeAssertions;
 using Entities.Wrappers;
 using Functions.CreateMoment;
-using Functions.CreateUser;
 using Functions.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
 using Operations.Queries.ValidateToken;
 
 namespace Functions.Tests.Integration;
