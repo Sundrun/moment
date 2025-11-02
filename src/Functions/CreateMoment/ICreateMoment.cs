@@ -1,4 +1,4 @@
-﻿using Functions.ValidateToken;
+﻿using Operations.Queries.ValidateToken;
 
 namespace Functions.CreateMoment;
 

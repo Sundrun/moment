@@ -1,5 +1,5 @@
 ﻿using Entities.Wrappers;
 
-namespace Functions.ValidateToken;
+namespace Operations.Queries.ValidateToken;
 
 public record ValidToken(GoogleIdentitySubject Subject) : IValidatedToken;

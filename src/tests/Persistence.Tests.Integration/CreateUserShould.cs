@@ -1,9 +1,9 @@
 using AwesomeAssertions;
 using Entities.Wrappers;
 using Functions.CreateUser;
-using Functions.ValidateToken;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using Operations.Queries.ValidateToken;
 using Testcontainers.MsSql;
 
 namespace Persistence.Tests.Integration;

@@ -4,11 +4,11 @@ using Entities.Wrappers;
 using Functions.CreateMoment;
 using Functions.CreateUser;
 using Functions.Functions;
-using Functions.ValidateToken;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using Operations.Queries.ValidateToken;
 
 namespace Functions.Tests.Integration;
 

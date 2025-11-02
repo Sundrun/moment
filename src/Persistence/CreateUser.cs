@@ -1,9 +1,10 @@
 ﻿using System.Security.Claims;
 using Entities;
 using Functions.CreateUser;
-using Functions.ValidateToken;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using Operations.Commands.CreateUser;
+using Operations.Queries.ValidateToken;
 
 namespace Persistence;
 

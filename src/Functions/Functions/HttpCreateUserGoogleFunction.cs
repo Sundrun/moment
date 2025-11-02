@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using Functions.CreateUser;
 using Functions.Helpers;
-using Functions.ValidateToken;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Operations.Commands.CreateUser;
+using Operations.Queries.ValidateToken;
 
 namespace Functions.Functions;
 

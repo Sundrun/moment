@@ -1,7 +1,7 @@
 ﻿using Entities.Wrappers;
-using Functions.ValidateToken;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
+using Operations.Queries.ValidateToken;
 
 namespace Infrastructure.Authentication;
 
