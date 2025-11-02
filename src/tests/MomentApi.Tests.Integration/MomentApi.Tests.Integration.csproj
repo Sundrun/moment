@@ -26,13 +26,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\MomentApi\MomentApi.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="local.settings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\MomentApi\MomentApi.csproj" />
     </ItemGroup>
 
 </Project>
