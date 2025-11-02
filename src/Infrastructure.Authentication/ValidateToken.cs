@@ -1,6 +1,5 @@
 ﻿using Entities.Wrappers;
 using Google.Apis.Auth;
-using Microsoft.Extensions.Configuration;
 using Operations.Queries.ValidateToken;
 
 namespace Infrastructure.Authentication;
@@ -9,11 +8,8 @@ public class ValidateToken : IValidateToken
 {
     private readonly GoogleJsonWebSignature.ValidationSettings _validationSettings;
 
-    public ValidateToken(IConfiguration config)
+    public ValidateToken(string clientId)
     {
-        var googleConfig = config.GetSection("Google");
-        var clientId = googleConfig.GetValue<string>("ClientId")!;
-        
         _validationSettings = new GoogleJsonWebSignature.ValidationSettings() 
         { 
             Audience = new List<string>() { clientId } 

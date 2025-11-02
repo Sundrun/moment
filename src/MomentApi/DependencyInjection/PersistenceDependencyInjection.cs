@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Operations.Commands.CreateUser;
+using Persistence;
 
-namespace Persistence;
+namespace MomentApi.DependencyInjection;
 
-public static class ConfigureServices
+public static class PersistenceDependencyInjection
 {
-    public static void AddPersistenceServices(this IServiceCollection services, IConfiguration config)
+    public static void ConfigurePersistenceServices(this IServiceCollection services, IConfiguration config)
     {
         services.AddTransient<MomentContext>(_ =>
         {
