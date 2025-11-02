@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Functions\Functions.csproj" />
     <ProjectReference Include="..\Infrastructure.Authentication\Infrastructure.Authentication.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
