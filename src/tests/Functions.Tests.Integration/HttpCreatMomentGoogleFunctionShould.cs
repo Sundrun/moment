@@ -1,10 +1,10 @@
 ﻿using AwesomeAssertions;
 using Entities.Wrappers;
-using Functions.CreateMoment;
 using Functions.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using NSubstitute;
+using Operations.Commands.CreateMoment;
 using Operations.Queries.ValidateToken;
 
 namespace Functions.Tests.Integration;

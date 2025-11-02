@@ -1,8 +1,8 @@
 ﻿using System.Net;
-using Functions.CreateMoment;
 using Functions.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Operations.Commands.CreateMoment;
 using Operations.Queries.ValidateToken;
 
 namespace Functions.Functions;

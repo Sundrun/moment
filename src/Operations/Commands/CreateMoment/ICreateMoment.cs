@@ -1,6 +1,6 @@
 ﻿using Operations.Queries.ValidateToken;
 
-namespace Functions.CreateMoment;
+namespace Operations.Commands.CreateMoment;
 
 public interface ICreateMoment
 {
