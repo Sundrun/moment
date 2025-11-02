@@ -22,7 +22,7 @@ public class HttpCreateMomentGoogleFunctionShould
 
         var createMoment = Substitute.For<ICreateMoment>();
         
-        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
+        var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
         var context = Substitute.For<FunctionContext>();
         var httpRequest = Substitute.For<HttpRequestData>(context);
@@ -49,7 +49,7 @@ public class HttpCreateMomentGoogleFunctionShould
         var createMoment = Substitute.For<ICreateMoment>();
         createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new MomentCreated());
         
-        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
+        var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
         var headers = new Dictionary<string, string>
         {
@@ -80,7 +80,7 @@ public class HttpCreateMomentGoogleFunctionShould
         
         var createMoment = Substitute.For<ICreateMoment>();
         
-        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
+        var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
         var headers = new Dictionary<string, string>
         {
@@ -112,7 +112,7 @@ public class HttpCreateMomentGoogleFunctionShould
         var createMoment = Substitute.For<ICreateMoment>();
         createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateMomentResponse());
         
-        var func = new HttpCreateMomentGoogle(validateToken, createMoment);
+        var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
         var headers = new Dictionary<string, string>
         {

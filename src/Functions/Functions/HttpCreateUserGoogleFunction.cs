@@ -8,7 +8,7 @@ using Operations.Queries.ValidateToken;
 
 namespace Functions.Functions;
 
-public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateUser createUser)
+public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateUser createUser) : IHttpFunction
 {
     [Function(nameof(CreateUserGoogle))]
     public async Task<HttpResponseData> CreateUserGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)

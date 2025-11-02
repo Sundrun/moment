@@ -7,7 +7,7 @@ using Operations.Queries.ValidateToken;
 
 namespace Functions.Functions;
 
-public class HttpCreateMomentGoogle(IValidateToken validateToken, ICreateMoment createMoment)
+public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreateMoment createMoment) : IHttpFunction
 {
     [Function(nameof(CreateMomentGoogle))]
     public async Task<HttpResponseData> CreateMomentGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
