@@ -33,7 +33,7 @@ public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreat
         return createUserResult switch
         {
             MomentCreated => request.CreateResponse(HttpStatusCode.Created),
-            NoUser => request.CreateResponse(HttpStatusCode.Forbidden),
+            NoUser => request.CreateResponse(HttpStatusCode.BadRequest),
             _ => request.CreateResponse(HttpStatusCode.InternalServerError)
         };
     }

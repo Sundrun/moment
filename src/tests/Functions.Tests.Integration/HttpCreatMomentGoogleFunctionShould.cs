@@ -72,7 +72,7 @@ public class HttpCreateMomentGoogleFunctionShould
     }
     
     [Fact]
-    public async Task IndicateForbiddenIfTokenDoesNotBelongToAUser()
+    public async Task IndicateBadRequestIfTokenDoesNotBelongToAUser()
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
@@ -100,7 +100,7 @@ public class HttpCreateMomentGoogleFunctionShould
         var result = response.StatusCode;
     
         // Assert
-        result.Should().Be(System.Net.HttpStatusCode.Forbidden);
+        result.Should().Be(System.Net.HttpStatusCode.BadRequest);
     }
     
     [Fact]
