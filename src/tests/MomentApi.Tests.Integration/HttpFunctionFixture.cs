@@ -1,5 +1,8 @@
+using Entities;
 using Entities.Wrappers;
 using Functions.Functions;
+using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +22,7 @@ public class HttpFunctionFixture : IAsyncLifetime
 {
     private MsSqlContainer _msSqlContainer = null!;
     private IHost _host = null!;
+    public readonly GoogleIdentitySubject TestSubject = new("TestSubject");
 
     private class TestValidateToken : IValidateToken
     {
@@ -33,14 +37,51 @@ public class HttpFunctionFixture : IAsyncLifetime
 
         await _msSqlContainer.StartAsync();
         
+        await InitializeDatabase();
+
+        InitializeHostAsync();
+    }
+
+    private async Task InitializeDatabase()
+    {
         var connectionString = _msSqlContainer.GetConnectionString();
+        var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
+            .UseSqlServer(connectionString);
+
+        var context = new MomentContext(optionsBuilder.Options);
+        await context.Database.EnsureCreatedAsync();
+        
+        await InitializeTestOwnerAsync(context);
+    }
+
+    private async Task InitializeTestOwnerAsync(MomentContext context)
+    {
+        var owner = new MomentOwner();
+        await context.MomentOwners.AddAsync(owner);
+        
+        var identity = new GoogleIdentity
+        {
+            Subject = TestSubject
+        };
+        var identityOwner = new GoogleIdentityOwner
+        {
+            Owner = owner,
+            GoogleIdentity = identity
+        };
+        await context.GoogleIdentities.AddAsync(identity);
+        await context.GoogleIdentityOwners.AddAsync(identityOwner);
+        await context.SaveChangesAsync();
+    }
+
+    private void InitializeHostAsync()
+    {
         _host = new HostBuilder()
             .ConfigureAppConfiguration(configurationBuilder =>
             {
                 var integrationTestConfig = new Dictionary<string, string>
                 {
                     { "Application:IsDevelopment", "true" },
-                    { "ConnectionStrings:MomentContext", connectionString },
+                    { "ConnectionStrings:MomentContext", _msSqlContainer.GetConnectionString() },
                 };
 
                 configurationBuilder.AddInMemoryCollection(integrationTestConfig!);

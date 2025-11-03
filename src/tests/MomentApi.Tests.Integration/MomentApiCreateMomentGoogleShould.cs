@@ -15,7 +15,7 @@ public class MomentApiCreateMomentGoogleShould(HttpFunctionFixture fixture) : IC
         // Arrange
         var headers = new Dictionary<string, string>
         {
-            { "Authorization", "Bearer myTestToken" },
+            { "Authorization", $"Bearer {fixture.TestSubject.Subject}" },
         };
         
         var context = Substitute.For<FunctionContext>();
