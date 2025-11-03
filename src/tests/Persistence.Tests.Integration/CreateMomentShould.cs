@@ -63,7 +63,7 @@ public class CreateMomentShould : IAsyncLifetime
     {
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
-        var result = await _testContext.MomentOwners.FirstOrDefaultAsync();
+        var result = await _testContext.CoreMoments.FirstOrDefaultAsync();
 
         // Assert
         result.Should().NotBeNull();
