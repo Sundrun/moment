@@ -3,11 +3,12 @@ using AwesomeAssertions;
 using Functions.Functions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using MomentApi.Tests.Integration.Fixtures;
 using NSubstitute;
 
 namespace MomentApi.Tests.Integration;
 
-public class MomentApiCreateMomentGoogleShould(HttpFunctionFixture fixture) : IClassFixture<HttpFunctionFixture>
+public class MomentApiCreateMomentGoogleShould: HttpFunctionFixture<DefaultTestValidateToken>
 {
     [Fact]
     public async Task CreateMoment()
@@ -15,7 +16,7 @@ public class MomentApiCreateMomentGoogleShould(HttpFunctionFixture fixture) : IC
         // Arrange
         var headers = new Dictionary<string, string>
         {
-            { "Authorization", $"Bearer {fixture.TestSubject.Subject}" },
+            { "Authorization", $"Bearer {DefaultTestValidateToken.TestSubject.Subject}" },
         };
         
         var context = Substitute.For<FunctionContext>();
@@ -25,7 +26,7 @@ public class MomentApiCreateMomentGoogleShould(HttpFunctionFixture fixture) : IC
         var responseData = Substitute.For<HttpResponseData>(context);
         httpRequest.CreateResponse().Returns(responseData);
         
-        var function = fixture.GetService<HttpCreateMomentGoogleFunction>();
+        var function = GetService<HttpCreateMomentGoogleFunction>();
         
         // Act
         var response = await function.CreateMomentGoogle(httpRequest);

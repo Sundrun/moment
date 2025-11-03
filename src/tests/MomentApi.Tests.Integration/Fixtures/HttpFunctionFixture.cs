@@ -10,24 +10,12 @@ using MomentApi.Extensions;
 using Operations.Queries.ValidateToken;
 using Testcontainers.MsSql;
 
-namespace MomentApi.Tests.Integration;
+namespace MomentApi.Tests.Integration.Fixtures;
 
-[CollectionDefinition(nameof(MomentApiCollection))]
-public class MomentApiCollection : ICollectionFixture<HttpFunctionFixture>
-{
-    // This class is a marker; no implementation needed
-}
-
-public class HttpFunctionFixture : IAsyncLifetime
+public class HttpFunctionFixture<T> : IAsyncLifetime where T : IValidateToken, new()
 {
     private MsSqlContainer _msSqlContainer = null!;
     private IHost _host = null!;
-    public readonly GoogleIdentitySubject TestSubject = new("TestSubject");
-
-    private class TestValidateToken : IValidateToken
-    {
-        public Task<IValidatedToken> ValidateTokenAsync(string token) => Task.FromResult<IValidatedToken>(new ValidToken(new GoogleIdentitySubject("TestSubject")));
-    }
     
     public async Task InitializeAsync()
     {
@@ -42,6 +30,16 @@ public class HttpFunctionFixture : IAsyncLifetime
         InitializeHostAsync();
     }
 
+    public async Task DisposeAsync()
+    {
+        await _msSqlContainer.DisposeAsync();
+    }
+    
+    protected TService GetService<TService>() where TService : class, IHttpFunction
+    {
+        return _host.Services.GetRequiredService<TService>();
+    }
+    
     private async Task InitializeDatabase()
     {
         var connectionString = _msSqlContainer.GetConnectionString();
@@ -61,7 +59,7 @@ public class HttpFunctionFixture : IAsyncLifetime
         
         var identity = new GoogleIdentity
         {
-            Subject = TestSubject
+            Subject = DefaultTestValidateToken.TestSubject
         };
         var identityOwner = new GoogleIdentityOwner
         {
@@ -96,16 +94,6 @@ public class HttpFunctionFixture : IAsyncLifetime
             })
             .Build();
     }
-
-    public async Task DisposeAsync()
-    {
-        await _msSqlContainer.DisposeAsync();
-    }
-    
-    public T GetService<T>() where T : class, IHttpFunction
-    {
-        return _host.Services.GetRequiredService<T>();
-    }
     
     private static void ReplaceValidateTokenService(IServiceCollection services)
     {
@@ -115,6 +103,6 @@ public class HttpFunctionFixture : IAsyncLifetime
             services.Remove(tokenValidator);
         }
                 
-        services.AddTransient<IValidateToken, TestValidateToken>();
+        services.AddTransient<IValidateToken>(_ => new T());
     }
 }
