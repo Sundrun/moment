@@ -48,6 +48,7 @@ public class CreateMomentShould : IAsyncLifetime
         };
         await _testContext.GoogleIdentities.AddAsync(identity);
         await _testContext.GoogleIdentityOwners.AddAsync(identityOwner);
+        await _testContext.SaveChangesAsync();
         
         var createUserContext = new MomentContext(optionsBuilder.Options);
         _dtu = new CreateMoment(createUserContext);
@@ -67,6 +68,23 @@ public class CreateMomentShould : IAsyncLifetime
 
         // Assert
         result.Should().NotBeNull();
+    }
+    
+    [Fact]
+    public async Task StoredMomentShouldBelongToUser()
+    {
+        // Arrange
+        var expected = _testContext.MomentOwners.FirstOrDefault();
+        
+        // Act
+        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        var momentOwnership = await _testContext.MomentOwnerships.
+            Include(momentOwnership => momentOwnership.Owner)
+            .FirstOrDefaultAsync();
+        var result = momentOwnership!.Owner;
+
+        // Assert
+        result.Should().BeEquivalentTo(expected);
     }
     
     [Fact]
