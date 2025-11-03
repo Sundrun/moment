@@ -27,8 +27,8 @@ public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateU
         var createUserResult =  await createUser.CreateAsync(validToken);
         return createUserResult switch
         {
-            UserExists => request.CreateResponse(HttpStatusCode.Conflict),
             UserCreated => request.CreateResponse(HttpStatusCode.Created),
+            UserExists => request.CreateResponse(HttpStatusCode.Conflict),
             _ => request.CreateResponse(HttpStatusCode.InternalServerError)
         };
     }

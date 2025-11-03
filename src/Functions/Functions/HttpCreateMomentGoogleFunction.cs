@@ -29,6 +29,12 @@ public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreat
             return request.CreateResponse(HttpStatusCode.Created);
         }
         
-        return request.CreateResponse(HttpStatusCode.InternalServerError);
+        var createUserResult =  await createMoment.CreateAsync(validToken);
+        return createUserResult switch
+        {
+            MomentCreated => request.CreateResponse(HttpStatusCode.Created),
+            NoUser => request.CreateResponse(HttpStatusCode.Forbidden),
+            _ => request.CreateResponse(HttpStatusCode.InternalServerError)
+        };
     }
 }
