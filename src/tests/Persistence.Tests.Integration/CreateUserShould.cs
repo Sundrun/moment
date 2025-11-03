@@ -8,6 +8,7 @@ using Testcontainers.MsSql;
 
 namespace Persistence.Tests.Integration;
 
+[Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class CreateUserShould : IAsyncLifetime
 {
     private CreateUser _dtu = null!;

@@ -6,6 +6,7 @@ using Testcontainers.MsSql;
 
 namespace Infrastructure.Database.Tests;
 
+[Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class MomentContextShould : IAsyncLifetime
 {
     private MsSqlContainer _msSqlContainer = null!;

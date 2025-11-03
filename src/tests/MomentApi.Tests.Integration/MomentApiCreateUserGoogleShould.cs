@@ -17,6 +17,7 @@ public class ValidateTokenNewUser : IValidateToken
     public Task<IValidatedToken> ValidateTokenAsync(string token) => Task.FromResult<IValidatedToken>(new ValidToken(NewSubject));
 }
 
+[Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class MomentApiCreateUserGoogleShould: HttpFunctionFixture<ValidateTokenNewUser>
 {
     [Fact]

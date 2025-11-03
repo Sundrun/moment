@@ -10,6 +10,7 @@ using Testcontainers.MsSql;
 
 namespace Persistence.Tests.Integration;
 
+[Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class CreateMomentShould : IAsyncLifetime
 {
     private CreateMoment _dtu = null!;

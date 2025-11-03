@@ -8,6 +8,7 @@ using NSubstitute;
 
 namespace MomentApi.Tests.Integration;
 
+[Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class MomentApiCreateMomentGoogleShould: HttpFunctionFixture<DefaultTestValidateToken>
 {
     [Fact]
