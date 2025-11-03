@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Operations.Commands.CreateMoment;
 using Operations.Commands.CreateUser;
 using Persistence;
 
@@ -29,6 +30,7 @@ public static class PersistenceDependencyInjection
             return context;
         });
         
+        services.AddTransient<ICreateMoment, CreateMoment>();
         services.AddTransient<ICreateUser, CreateUser>();
     }
 }
