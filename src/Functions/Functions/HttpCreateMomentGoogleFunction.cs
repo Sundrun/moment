@@ -23,12 +23,6 @@ public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreat
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        var createMomentResult =  await createMoment.CreateAsync(validToken);
-        if (createMomentResult is MomentCreated)
-        {
-            return request.CreateResponse(HttpStatusCode.Created);
-        }
-        
         var createUserResult =  await createMoment.CreateAsync(validToken);
         return createUserResult switch
         {
