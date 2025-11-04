@@ -18,7 +18,14 @@ public class GetMoments(MomentContext context) : IGetMoments
         {
             return new NoUser();
         }
+        
+        var moments = await context.MomentOwnerships
+            .Include(mo => mo.Moment)
+            .Include(mo => mo.Owner)
+            .Where(mo => mo.Owner.Id == owner.Owner.Id)
+            .Select(mo => mo.Moment)
+            .ToListAsync();
 
-        return null!;
+        return new UserMoments(moments);
     }
 }
