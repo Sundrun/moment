@@ -93,15 +93,15 @@ public class GetMomentsShould : IAsyncLifetime
         await _testContext.MomentOwnerships.AddAsync(ownership);
         await _testContext.SaveChangesAsync();
         
-        var expected = new CoreMoment
+        var expectedCoreMoment = new CoreMoment
         {
             Id = new CoreMomentId(1),
             Timestamp = testTimestamp
         };
+        var expected = new UserMoments([expectedCoreMoment]);
         
         // Act
-        var response = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
-        var result = response.Moments.First();
+        var result = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
 
         // Assert
         result.Should().BeEquivalentTo(expected);
