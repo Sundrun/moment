@@ -1,33 +1,33 @@
 ﻿using System.Net;
-using Functions.CreateUser;
 using Functions.Helpers;
-using Functions.ValidateToken;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Operations.Commands.CreateMoment;
+using Operations.Queries.ValidateToken;
 
 namespace Functions.Functions;
 
-public class HttpCreateUserFunction(IValidateToken validateToken, ICreateUser createUser)
+public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreateMoment createMoment) : IHttpFunction
 {
-    [Function(nameof(CreateUser))]
-    public async Task<HttpResponseData> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
+    [Function(nameof(CreateMomentGoogle))]
+    public async Task<HttpResponseData> CreateMomentGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
     {
         if (!request.TryExtractToken(out var token))
         {
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
-
+        
         var validationResult = await validateToken.ValidateTokenAsync(token);
         if (validationResult is not ValidToken validToken)
         {
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        var createUserResult =  await createUser.CreateAsync(validToken);
+        var createUserResult =  await createMoment.CreateAsync(validToken);
         return createUserResult switch
         {
-            UserExists => request.CreateResponse(HttpStatusCode.Conflict),
-            UserCreated => request.CreateResponse(HttpStatusCode.Created),
+            MomentCreated => request.CreateResponse(HttpStatusCode.Created),
+            NoUser => request.CreateResponse(HttpStatusCode.BadRequest),
             _ => request.CreateResponse(HttpStatusCode.InternalServerError)
         };
     }

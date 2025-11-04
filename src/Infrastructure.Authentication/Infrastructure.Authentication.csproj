@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Functions\Functions.csproj" />
+      <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
+      <ProjectReference Include="..\Operations\Operations.csproj" />
     </ItemGroup>
 
 </Project>

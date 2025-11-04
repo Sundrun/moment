@@ -1,17 +1,17 @@
-﻿using System.Security.Claims;
-using AwesomeAssertions;
+﻿using AwesomeAssertions;
 using Entities.Wrappers;
 using Functions.CreateUser;
 using Functions.Functions;
-using Functions.ValidateToken;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using Operations.Commands.CreateUser;
+using Operations.Queries.ValidateToken;
 
 namespace Functions.Tests.Integration;
 
-public class HttpCreateUserFunctionShould
+public class HttpCreateUserGoogleFunctionShould
 {
     private record TestCreateUserResult : ICreateUserResponse;
     
@@ -20,11 +20,11 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserCreated());
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var headers = new Dictionary<string, string>
         {
@@ -39,7 +39,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -55,7 +55,7 @@ public class HttpCreateUserFunctionShould
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserCreated());
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var headers = new Dictionary<string, string>
         {
@@ -70,7 +70,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -86,7 +86,7 @@ public class HttpCreateUserFunctionShould
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserCreated());
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var context = Substitute.For<FunctionContext>();
         var httpRequest = Substitute.For<HttpRequestData>(context);
@@ -96,7 +96,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -108,11 +108,11 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new UserExists());
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var headers = new Dictionary<string, string>
         {
@@ -127,7 +127,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -135,15 +135,15 @@ public class HttpCreateUserFunctionShould
     }
     
     [Fact]
-    public async Task IndicateErrorWhenUnknownUserCreatedResultIsUnexpected()
+    public async Task IndicateErrorWhenUserCreatedResultIsUnexpected()
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateUserResult());
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var headers = new Dictionary<string, string>
         {
@@ -158,7 +158,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert
@@ -170,11 +170,11 @@ public class HttpCreateUserFunctionShould
     {
         // Arrange
         var validateToken = Substitute.For<IValidateToken>();
-        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new OwnerGoogleIdentitySubject(string.Empty)));
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createUser = Substitute.For<ICreateUser>();
         createUser.CreateAsync(Arg.Any<ValidToken>()).ReturnsNull();
-        var func = new HttpCreateUserFunction(validateToken, createUser);
+        var func = new HttpCreateUserGoogleFunction(validateToken, createUser);
         
         var headers = new Dictionary<string, string>
         {
@@ -189,7 +189,7 @@ public class HttpCreateUserFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
 
         // Act
-        var response = await func.CreateUser(httpRequest);
+        var response = await func.CreateUserGoogle(httpRequest);
         var result = response.StatusCode;
 
         // Assert

@@ -1,23 +1,6 @@
-using Infrastructure.Authentication;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Persistence;
+using MomentApi.Extensions;
 
-var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
-    .ConfigureAppConfiguration((_, config) =>
-    {
-        config.AddEnvironmentVariables();
-    })
-    .ConfigureServices((context, services) =>
-    {
-        services.AddAuthenticationServices();
-        services.AddPersistenceServices(context.Configuration);
-    })
-    .ConfigureLogging(logging => logging.AddConsole())
-    .Build();
+var host = new HostBuilder().ConfigureMomentApi().Build();
 
 await host.RunAsync();
-
-public partial class Program { }

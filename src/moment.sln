@@ -2,27 +2,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MomentApi", "src\MomentApi\MomentApi.csproj", "{B97045B8-EEEF-D882-10CC-C88BA1053162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MomentApi", "MomentApi\MomentApi.csproj", "{B97045B8-EEEF-D882-10CC-C88BA1053162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "src\Entities\Entities.csproj", "{6ED59893-4E68-4E74-B563-53B0F33D3CCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{6ED59893-4E68-4E74-B563-53B0F33D3CCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Database", "src\Infrastructure.Database\Infrastructure.Database.csproj", "{E489442E-5410-409F-A191-10A9A5865425}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Database", "Infrastructure.Database\Infrastructure.Database.csproj", "{E489442E-5410-409F-A191-10A9A5865425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Database.Tests", "src\tests\Infrastructure.Database.Tests\Infrastructure.Database.Tests.csproj", "{0058D8EF-779F-4502-9FD3-C492737B1A56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Database.Tests", "tests\Infrastructure.Database.Tests\Infrastructure.Database.Tests.csproj", "{0058D8EF-779F-4502-9FD3-C492737B1A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Integration", "src\tests\Functions.Tests.Integration\Functions.Tests.Integration.csproj", "{F2EEB375-9CB6-4A78-BFD9-7F2F7E8B64CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Integration", "tests\Functions.Tests.Integration\Functions.Tests.Integration.csproj", "{F2EEB375-9CB6-4A78-BFD9-7F2F7E8B64CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Authentication", "src\Infrastructure.Authentication\Infrastructure.Authentication.csproj", "{7471A7F4-6ABD-4B87-90CE-591A98AA6EF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Authentication", "Infrastructure.Authentication\Infrastructure.Authentication.csproj", "{7471A7F4-6ABD-4B87-90CE-591A98AA6EF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Unit", "src\tests\Functions.Tests.Unit\Functions.Tests.Unit.csproj", "{78413312-2027-4FCD-BDD8-568FA75B0C16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions.Tests.Unit", "tests\Functions.Tests.Unit\Functions.Tests.Unit.csproj", "{78413312-2027-4FCD-BDD8-568FA75B0C16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "src\Functions\Functions.csproj", "{D4A4CF62-A963-40AC-BF0D-136BE5B0CFEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "Functions\Functions.csproj", "{D4A4CF62-A963-40AC-BF0D-136BE5B0CFEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "src\Persistence\Persistence.csproj", "{C9721EF1-1AE8-4738-A646-A9DE0B71D6E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{C9721EF1-1AE8-4738-A646-A9DE0B71D6E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Tests.Integration", "src\tests\Persistence.Tests.Integration\Persistence.Tests.Integration.csproj", "{2DE0F806-7E1C-4748-9A77-1E3A719DD30B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.Tests.Integration", "tests\Persistence.Tests.Integration\Persistence.Tests.Integration.csproj", "{2DE0F806-7E1C-4748-9A77-1E3A719DD30B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6B41D16D-35E8-41DC-88AF-3E550BF8625F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operations", "Operations\Operations.csproj", "{348D1994-8446-4FC9-B03D-604BB4E1F2CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MomentApi.Tests.Integration", "tests\MomentApi.Tests.Integration\MomentApi.Tests.Integration.csproj", "{C5F47BF8-8311-4D98-9661-2342663B2360}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +74,14 @@ Global
 		{2DE0F806-7E1C-4748-9A77-1E3A719DD30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DE0F806-7E1C-4748-9A77-1E3A719DD30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DE0F806-7E1C-4748-9A77-1E3A719DD30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348D1994-8446-4FC9-B03D-604BB4E1F2CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348D1994-8446-4FC9-B03D-604BB4E1F2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348D1994-8446-4FC9-B03D-604BB4E1F2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348D1994-8446-4FC9-B03D-604BB4E1F2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F47BF8-8311-4D98-9661-2342663B2360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F47BF8-8311-4D98-9661-2342663B2360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F47BF8-8311-4D98-9661-2342663B2360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F47BF8-8311-4D98-9661-2342663B2360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,9 +90,10 @@ Global
 		SolutionGuid = {8696AC4C-1C37-4F3A-9E30-782284BB0A76}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F2EEB375-9CB6-4A78-BFD9-7F2F7E8B64CD} = {6B41D16D-35E8-41DC-88AF-3E550BF8625F}
-		{78413312-2027-4FCD-BDD8-568FA75B0C16} = {6B41D16D-35E8-41DC-88AF-3E550BF8625F}
-		{0058D8EF-779F-4502-9FD3-C492737B1A56} = {6B41D16D-35E8-41DC-88AF-3E550BF8625F}
-		{2DE0F806-7E1C-4748-9A77-1E3A719DD30B} = {6B41D16D-35E8-41DC-88AF-3E550BF8625F}
+		{C5F47BF8-8311-4D98-9661-2342663B2360} = {0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}
+		{0058D8EF-779F-4502-9FD3-C492737B1A56} = {0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}
+		{F2EEB375-9CB6-4A78-BFD9-7F2F7E8B64CD} = {0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}
+		{78413312-2027-4FCD-BDD8-568FA75B0C16} = {0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}
+		{2DE0F806-7E1C-4748-9A77-1E3A719DD30B} = {0EE2B56D-E0B1-42FA-BD4E-6B5F6A836A8A}
 	EndGlobalSection
 EndGlobal
