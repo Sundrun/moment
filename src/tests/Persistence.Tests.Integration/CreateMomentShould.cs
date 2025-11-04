@@ -1,7 +1,6 @@
 using AwesomeAssertions;
 using Entities;
 using Entities.Wrappers;
-using Functions.CreateUser;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Operations.Commands.CreateMoment;
