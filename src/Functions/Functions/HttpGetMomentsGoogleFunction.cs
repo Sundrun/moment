@@ -17,6 +17,12 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
+        var validationResult = await validateToken.ValidateTokenAsync(token);
+        if (validationResult is not ValidToken validToken)
+        {
+            return request.CreateResponse(HttpStatusCode.Unauthorized);
+        }
+        
         throw new NotImplementedException();
     }
 }
