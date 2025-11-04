@@ -25,6 +25,11 @@ public class GetMoments(MomentContext context) : IGetMoments
             .Where(mo => mo.Owner.Id == owner.Owner.Id)
             .Select(mo => mo.Moment)
             .ToListAsync();
+        
+        if (moments.Count == 0)
+        {
+            return new NoMoments();
+        }
 
         return new UserMoments(moments);
     }
