@@ -23,6 +23,12 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        throw new NotImplementedException();
+        var getMomentsResult =  await getMoments.GetMomentsAsync(validToken);
+        if (getMomentsResult is NoUser)
+        {
+            return request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        return request.CreateResponse(HttpStatusCode.InternalServerError);
     }
 }

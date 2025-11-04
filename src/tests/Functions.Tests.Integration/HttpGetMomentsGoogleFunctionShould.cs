@@ -159,6 +159,38 @@ public class HttpGetMomentsGoogleFunctionShould
     }
     
     [Fact]
+    public async Task IndicateBadRequestIfTokenDoesNotBelongToAUser()
+    {
+        // Arrange
+        var validateToken = Substitute.For<IValidateToken>();
+        validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
+        
+        var getMoments = Substitute.For<IGetMoments>();
+        getMoments.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new NoUser());
+        
+        var func = new HttpGetMomentsGoogleFunction(validateToken, getMoments);
+        
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", "Bearer myTestToken" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpRequest.CreateResponse().Returns(httpResponse);
+    
+        // Act
+        var response = await func.GetMomentsGoogle(httpRequest);
+        var result = response.StatusCode;
+    
+        // Assert
+        result.Should().Be(System.Net.HttpStatusCode.BadRequest);
+    }
+    
+    [Fact]
     public async Task IndicateUnauthorizedWhenTokenIsInvalid()
     {
         // Arrange
