@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Functions.Worker;
+﻿using System.Net;
+using Functions.Helpers;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Operations.Queries.GetMoments;
 using Operations.Queries.ValidateToken;
@@ -10,6 +12,11 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
     [Function(nameof(GetMomentsGoogle))]
     public async Task<HttpResponseData> GetMomentsGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData request)
     {
+        if (!request.TryExtractToken(out var token))
+        {
+            return request.CreateResponse(HttpStatusCode.Unauthorized);
+        }
+        
         throw new NotImplementedException();
     }
 }
