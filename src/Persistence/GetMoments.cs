@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using Operations.Queries.GetMoments;
 using Operations.Queries.ValidateToken;
 
@@ -6,8 +7,18 @@ namespace Persistence;
 
 public class GetMoments(MomentContext context) : IGetMoments
 {
-    public Task<IGetMomentsResponse> GetMomentsAsync(ValidToken token)
+    public async Task<IGetMomentsResponse> GetMomentsAsync(ValidToken token)
     {
-        return Task.FromResult<IGetMomentsResponse>(null!);
+        var owner = await context.GoogleIdentityOwners
+            .Include(o => o.GoogleIdentity)
+            .Include(o => o.Owner)
+            .FirstOrDefaultAsync(o => o.GoogleIdentity.Subject == token.Subject);
+        
+        if (owner == null)
+        {
+            return new NoUser();
+        }
+
+        return null!;
     }
 }

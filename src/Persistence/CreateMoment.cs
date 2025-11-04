@@ -11,10 +11,10 @@ public class CreateMoment(MomentContext context) : ICreateMoment
 {
     public async Task<ICreateMomentResponse> CreateAsync(ValidToken token)
     {
-        var owner = context.GoogleIdentityOwners
+        var owner = await context.GoogleIdentityOwners
             .Include(o => o.GoogleIdentity)
             .Include(o => o.Owner)
-            .FirstOrDefault(o => o.GoogleIdentity.Subject == token.Subject);
+            .FirstOrDefaultAsync(o => o.GoogleIdentity.Subject == token.Subject);
 
         if (owner == null)
         {
