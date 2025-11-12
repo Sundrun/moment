@@ -34,9 +34,12 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
             return request.CreateResponse(HttpStatusCode.NoContent);
         }
 
-        if (getMomentsResult is UserMoments)
+        if (getMomentsResult is UserMoments userMoments)
         {
-            return request.CreateResponse(HttpStatusCode.OK);
+            var response = request.CreateResponse(HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(userMoments.Moments);
+
+            return response;
         }
 
         return request.CreateResponse(HttpStatusCode.InternalServerError);

@@ -68,6 +68,7 @@ public class HttpGetMomentsGoogleFunctionShould
         };
         
         var context = Substitute.For<FunctionContext>();
+        
         var httpRequest = Substitute.For<HttpRequestData>(context);
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
