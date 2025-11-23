@@ -31,6 +31,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns([]);
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
@@ -73,6 +74,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
@@ -122,7 +124,9 @@ public class HttpGetMomentsGoogleFunctionShould
     
         // Act
         var response = await func.GetMomentsGoogle(httpRequest);
-        using var reader = new StreamReader(response.Body);
+        
+        bodyStream.Position = 0;
+        using var reader = new StreamReader(bodyStream);
         var result = await reader.ReadToEndAsync();
     
         // Assert
@@ -151,6 +155,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
@@ -183,6 +188,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
@@ -214,6 +220,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
@@ -246,6 +253,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        httpResponse.Body.Returns(new MemoryStream());
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
