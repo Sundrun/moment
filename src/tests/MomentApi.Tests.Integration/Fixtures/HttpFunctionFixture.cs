@@ -90,6 +90,7 @@ public class HttpFunctionFixture<T> : IAsyncLifetime where T : IValidateToken, n
 
                 services.AddTransient<HttpCreateMomentGoogleFunction>();
                 services.AddTransient<HttpCreateUserGoogleFunction>();
+                services.AddTransient<HttpGetMomentsGoogleFunction>();
             })
             .Build();
     }
