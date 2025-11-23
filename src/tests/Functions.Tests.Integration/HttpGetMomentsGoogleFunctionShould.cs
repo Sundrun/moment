@@ -123,7 +123,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        await func.GetMomentsGoogle(httpRequest);
         
         bodyStream.Position = 0;
         using var reader = new StreamReader(bodyStream);

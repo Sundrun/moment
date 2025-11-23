@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using AwesomeAssertions;
 using Functions.Functions;
 using Infrastructure.Database;
@@ -15,9 +16,16 @@ namespace MomentApi.Tests.Integration;
 [Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestValidateToken>
 {
+    private MomentContext _context = null!;
+
     public override async Task InitializeAsync()
     {
         await base.InitializeAsync();
+        
+        var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
+            .UseSqlServer(ConnectionString);
+
+        _context = new MomentContext(optionsBuilder.Options);
 
         await AddMoment();
     }
@@ -36,8 +44,7 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var responseData = Substitute.For<HttpResponseData>(context);
-        var bodyStream = new MemoryStream();
-        responseData.Body.Returns(bodyStream);
+        responseData.Body.Returns(new MemoryStream());
         
         httpRequest.CreateResponse().Returns(responseData);
         
@@ -54,16 +61,43 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
     [Fact]
     public async Task RetrieveExpectedData()
     {
-        throw new NotImplementedException();
+        // Arrange
+        var expected = await _context.MomentOwnerships
+            .Include(mo => mo.Moment)
+            .Include(mo => mo.Owner)
+            .Select(mo => mo.Moment)
+            .ToListAsync();
+        
+        var headers = new Dictionary<string, string>
+        {
+            { "Authorization", $"Bearer {DefaultTestValidateToken.TestSubject.Subject}" },
+        };
+        
+        var context = Substitute.For<FunctionContext>();
+        var httpRequest = Substitute.For<HttpRequestData>(context);
+        httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
+        
+        var responseData = Substitute.For<HttpResponseData>(context);
+        var bodyStream = new MemoryStream();
+        responseData.Body.Returns(bodyStream);
+        
+        httpRequest.CreateResponse().Returns(responseData);
+        
+        var function = GetService<HttpGetMomentsGoogleFunction>();
+        
+        // Act
+        await function.GetMomentsGoogle(httpRequest);
+        
+        bodyStream.Position = 0;
+        var result = await JsonSerializer.DeserializeAsync<IEnumerable<Entities.CoreMoment>>(bodyStream);
+        
+        // Assert
+        result.Should().BeEquivalentTo(expected);
     }
     
     private async Task AddMoment()
     {
-        var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
-            .UseSqlServer(ConnectionString);
-
-        var context = new MomentContext(optionsBuilder.Options);
-        var createMoment = new CreateMoment(context);
+        var createMoment = new CreateMoment(_context);
 
         var validToken = new ValidToken(DefaultTestValidateToken.TestSubject);
         await createMoment.CreateAsync(validToken);
