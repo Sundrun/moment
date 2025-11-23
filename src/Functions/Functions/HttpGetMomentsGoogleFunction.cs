@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using Functions.Helpers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -37,7 +38,10 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
         if (getMomentsResult is UserMoments userMoments)
         {
             var response = request.CreateResponse(HttpStatusCode.OK);
-            await response.WriteAsJsonAsync(userMoments.Moments);
+            
+            var serializedMoments = JsonSerializer.Serialize(userMoments.Moments);
+            
+            await response.WriteStringAsync(serializedMoments);
 
             return response;
         }

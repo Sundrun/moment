@@ -116,6 +116,8 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var httpResponse = Substitute.For<HttpResponseData>(context);
+        var bodyStream = new MemoryStream();
+        httpResponse.Body.Returns(bodyStream);
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act

@@ -36,6 +36,9 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         httpRequest.Headers.Returns(new HttpHeadersCollection(headers));
         
         var responseData = Substitute.For<HttpResponseData>(context);
+        var bodyStream = new MemoryStream();
+        responseData.Body.Returns(bodyStream);
+        
         httpRequest.CreateResponse().Returns(responseData);
         
         var function = GetService<HttpGetMomentsGoogleFunction>();
