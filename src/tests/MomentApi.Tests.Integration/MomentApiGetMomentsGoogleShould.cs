@@ -1,16 +1,27 @@
 ﻿using System.Net;
 using AwesomeAssertions;
 using Functions.Functions;
+using Infrastructure.Database;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.EntityFrameworkCore;
 using MomentApi.Tests.Integration.Fixtures;
 using NSubstitute;
+using Operations.Queries.ValidateToken;
+using Persistence;
 
 namespace MomentApi.Tests.Integration;
 
 [Collection("RunInSerialOrderToAvoidTestContainerConflicts")]
 public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestValidateToken>
 {
+    public override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
+
+        await AddMoment();
+    }
+
     [Fact]
     public async Task IndicateSuccess()
     {
@@ -35,5 +46,23 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         
         // Assert
         result.Should().Be(HttpStatusCode.OK);
+    }
+    
+    [Fact]
+    public async Task RetrieveExpectedData()
+    {
+        throw new NotImplementedException();
+    }
+    
+    private async Task AddMoment()
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
+            .UseSqlServer(ConnectionString);
+
+        var context = new MomentContext(optionsBuilder.Options);
+        var createMoment = new CreateMoment(context);
+
+        var validToken = new ValidToken(DefaultTestValidateToken.TestSubject);
+        await createMoment.CreateAsync(validToken);
     }
 }
