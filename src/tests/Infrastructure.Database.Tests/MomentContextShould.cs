@@ -204,4 +204,23 @@ public class MomentContextShould : IAsyncLifetime
         // Assert
         await dbSaveTask.Should().ThrowAsync<DbUpdateException>();
     }
+    
+    [Fact]
+    public async Task RetrieveExpectedMetadataTimestampId()
+    {
+        // Arrange
+        var timestamp = new MetadataTimestamp();
+        await _dbContext.MetadataTimestamps.AddAsync(timestamp);
+        await _dbContext.SaveChangesAsync();
+
+        const long expected = 1;
+        
+        // Act
+        var storedTimestamp = await _dbContext.MetadataTimestamps.FirstAsync();
+        var result = storedTimestamp.Id.Id;
+        
+        
+        // Assert
+        result.Should().Be(expected);
+    }
 }
