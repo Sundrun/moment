@@ -1,5 +1,4 @@
 using Entities;
-using Entities.Wrappers;
 using Functions.Functions;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +15,9 @@ public class HttpFunctionFixture<T> : IAsyncLifetime where T : IValidateToken, n
 {
     private MsSqlContainer _msSqlContainer = null!;
     private IHost _host = null!;
+    protected string ConnectionString => _msSqlContainer.GetConnectionString();
     
-    public async Task InitializeAsync()
+    public async virtual Task InitializeAsync()
     {
         _msSqlContainer = new MsSqlBuilder()
             .WithPortBinding(1433)
@@ -42,9 +42,8 @@ public class HttpFunctionFixture<T> : IAsyncLifetime where T : IValidateToken, n
     
     private async Task InitializeDatabase()
     {
-        var connectionString = _msSqlContainer.GetConnectionString();
         var optionsBuilder = new DbContextOptionsBuilder<MomentContext>()
-            .UseSqlServer(connectionString);
+            .UseSqlServer(ConnectionString);
 
         var context = new MomentContext(optionsBuilder.Options);
         await context.Database.EnsureCreatedAsync();
@@ -91,6 +90,7 @@ public class HttpFunctionFixture<T> : IAsyncLifetime where T : IValidateToken, n
 
                 services.AddTransient<HttpCreateMomentGoogleFunction>();
                 services.AddTransient<HttpCreateUserGoogleFunction>();
+                services.AddTransient<HttpGetMomentsGoogleFunction>();
             })
             .Build();
     }

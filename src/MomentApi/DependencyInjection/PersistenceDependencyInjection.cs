@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Operations.Commands.CreateMoment;
 using Operations.Commands.CreateUser;
+using Operations.Queries.GetMoments;
 using Persistence;
 
 namespace MomentApi.DependencyInjection;
@@ -32,5 +33,6 @@ public static class PersistenceDependencyInjection
         
         services.AddTransient<ICreateMoment, CreateMoment>();
         services.AddTransient<ICreateUser, CreateUser>();
+        services.AddTransient<IGetMoments, GetMoments>();
     }
 }

@@ -1,7 +1,6 @@
 using AwesomeAssertions;
 using Entities;
 using Entities.Wrappers;
-using Functions.CreateUser;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Operations.Commands.CreateMoment;
@@ -65,7 +64,18 @@ public class CreateMomentShould : IAsyncLifetime
     {
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
-        var result = await _testContext.CoreMoments.FirstOrDefaultAsync();
+        var result = await _testContext.CoreMoments.FirstAsync();
+
+        // Assert
+        result.Should().NotBeNull();
+    }
+    
+    [Fact]
+    public async Task StoreMomentTimestamp()
+    {
+        // Act
+        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        var result = await _testContext.MomentTimestamps.FirstAsync();
 
         // Assert
         result.Should().NotBeNull();
@@ -75,14 +85,14 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task StoredMomentShouldBelongToUser()
     {
         // Arrange
-        var expected = _testContext.MomentOwners.FirstOrDefault();
+        var expected = await _testContext.MomentOwners.FirstAsync();
         
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
         var momentOwnership = await _testContext.MomentOwnerships.
             Include(momentOwnership => momentOwnership.Owner)
-            .FirstOrDefaultAsync();
-        var result = momentOwnership!.Owner;
+            .FirstAsync();
+        var result = momentOwnership.Owner;
 
         // Assert
         result.Should().BeEquivalentTo(expected);

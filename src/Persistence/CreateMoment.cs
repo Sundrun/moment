@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Entities.Wrappers;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Operations.Commands.CreateMoment;
@@ -11,29 +10,36 @@ public class CreateMoment(MomentContext context) : ICreateMoment
 {
     public async Task<ICreateMomentResponse> CreateAsync(ValidToken token)
     {
-        var owner = context.GoogleIdentityOwners
+        var owner = await context.GoogleIdentityOwners
             .Include(o => o.GoogleIdentity)
             .Include(o => o.Owner)
-            .FirstOrDefault(o => o.GoogleIdentity.Subject == token.Subject);
+            .FirstOrDefaultAsync(o => o.GoogleIdentity.Subject == token.Subject);
 
         if (owner == null)
         {
             return new NoUser();
         }
         
-        var moment = new CoreMoment
-        {
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
+        var moment = new CoreMoment();
+        await context.CoreMoments.AddAsync(moment);
         
         var momentOwner = new MomentOwnership()
         {
             Owner = owner.Owner,
             Moment = moment
         };
-        
-        await context.CoreMoments.AddAsync(moment);
         await context.MomentOwnerships.AddAsync(momentOwner);
+        
+        var metadataTimestamp = new MetadataTimestamp();
+        await context.MetadataTimestamps.AddAsync(metadataTimestamp);
+        
+        var momentTimestamp = new MomentTimestamp
+        {
+            Moment = moment,
+            Timestamp = metadataTimestamp
+        };
+        await context.MomentTimestamps.AddAsync(momentTimestamp);
+        
         await context.SaveChangesAsync();
         
         return new MomentCreated();
