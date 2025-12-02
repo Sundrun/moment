@@ -25,15 +25,25 @@ public class CreateMoment(MomentContext context) : ICreateMoment
         {
             Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
         };
+        await context.CoreMoments.AddAsync(moment);
         
         var momentOwner = new MomentOwnership()
         {
             Owner = owner.Owner,
             Moment = moment
         };
-        
-        await context.CoreMoments.AddAsync(moment);
         await context.MomentOwnerships.AddAsync(momentOwner);
+        
+        var metadataTimestamp = new MetadataTimestamp();
+        await context.MetadataTimestamps.AddAsync(metadataTimestamp);
+        
+        var momentTimestamp = new MomentTimestamp
+        {
+            Moment = moment,
+            Timestamp = metadataTimestamp
+        };
+        await context.MomentTimestamps.AddAsync(momentTimestamp);
+        
         await context.SaveChangesAsync();
         
         return new MomentCreated();

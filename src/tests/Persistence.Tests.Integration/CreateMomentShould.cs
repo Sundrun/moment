@@ -64,7 +64,18 @@ public class CreateMomentShould : IAsyncLifetime
     {
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
-        var result = await _testContext.CoreMoments.FirstOrDefaultAsync();
+        var result = await _testContext.CoreMoments.FirstAsync();
+
+        // Assert
+        result.Should().NotBeNull();
+    }
+    
+    [Fact]
+    public async Task StoreMomentTimestamp()
+    {
+        // Act
+        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        var result = await _testContext.MomentTimestamps.FirstAsync();
 
         // Assert
         result.Should().NotBeNull();
@@ -74,7 +85,7 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task StoredMomentShouldBelongToUser()
     {
         // Arrange
-        var expected = _testContext.MomentOwners.FirstOrDefault();
+        var expected = _testContext.MomentOwners.FirstAsync();
         
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
