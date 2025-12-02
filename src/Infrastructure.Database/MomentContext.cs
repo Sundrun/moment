@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Infrastructure.Database.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;

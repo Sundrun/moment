@@ -2,7 +2,7 @@
 using Entities.Wrappers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Database;
+namespace Infrastructure.Database.Extensions;
 
 internal static class ModelBuilderMomentTimestampExtension
 {
