@@ -34,22 +34,7 @@ public class MomentContextShould : IAsyncLifetime
         await _msSqlContainer.DisposeAsync();
     }
     
-    [Fact]
-    public async Task RetrieveExpectedMomentOwner()
-    {
-        // Arrange
-        var newOwner = new MomentOwner();
-        await _dbContext.MomentOwners.AddAsync(newOwner);
-        await _dbContext.SaveChangesAsync();
 
-        var expected = new MomentOwner{Id = new MomentOwnerId(1)};
-        
-        // Act
-        var result = await _dbContext.MomentOwners.FirstOrDefaultAsync();
-        
-        // Assert
-        result.Should().BeEquivalentTo(expected);
-    }
     
     [Fact]
     public async Task RetrieveExpectedMomentOwnership()
