@@ -77,11 +77,7 @@ public class GetMomentsShould : IAsyncLifetime
     public async Task RetrieveExpectedMoment()
     {
         // Arrange
-        var testTimestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow);
-        var newMoment = new CoreMoment
-        {
-            Timestamp = testTimestamp
-        };
+        var newMoment = new CoreMoment();
         
         var ownership = new MomentOwnership
         {
@@ -95,8 +91,7 @@ public class GetMomentsShould : IAsyncLifetime
         
         var expectedCoreMoment = new CoreMoment
         {
-            Id = new CoreMomentId(1),
-            Timestamp = testTimestamp
+            Id = new CoreMomentId(1)
         };
         var expected = new UserMoments([expectedCoreMoment]);
         
@@ -111,32 +106,24 @@ public class GetMomentsShould : IAsyncLifetime
     public async Task BeAbleToRetrieveMultipleMoments()
     {
         // Arrange
-        var newMoment1 = new CoreMoment
-        {
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
-        
+        var newMoment1 = new CoreMoment();
         var ownership1 = new MomentOwnership
         {
             Moment = newMoment1,
             Owner = _momentOwner
         };
+        await _testContext.CoreMoments.AddAsync(newMoment1);
+        await _testContext.MomentOwnerships.AddAsync(ownership1);
         
-        var newMoment2 = new CoreMoment
-        {
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
-        
+        var newMoment2 = new CoreMoment();
         var ownership2 = new MomentOwnership
         {
             Moment = newMoment2,
             Owner = _momentOwner
         };
-        
-        await _testContext.CoreMoments.AddAsync(newMoment1);
         await _testContext.CoreMoments.AddAsync(newMoment2);
-        await _testContext.MomentOwnerships.AddAsync(ownership1);
         await _testContext.MomentOwnerships.AddAsync(ownership2);
+        
         await _testContext.SaveChangesAsync();
 
         // Act
@@ -168,10 +155,7 @@ public class GetMomentsShould : IAsyncLifetime
         await _testContext.GoogleIdentities.AddAsync(identity);
         await _testContext.GoogleIdentityOwners.AddAsync(identityOwner);
         
-        var newMoment = new CoreMoment
-        {
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
+        var newMoment = new CoreMoment();
         
         var ownership = new MomentOwnership
         {

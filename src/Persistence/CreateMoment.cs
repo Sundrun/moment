@@ -21,10 +21,7 @@ public class CreateMoment(MomentContext context) : ICreateMoment
             return new NoUser();
         }
         
-        var moment = new CoreMoment
-        {
-            Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
-        };
+        var moment = new CoreMoment();
         await context.CoreMoments.AddAsync(moment);
         
         var momentOwner = new MomentOwnership()

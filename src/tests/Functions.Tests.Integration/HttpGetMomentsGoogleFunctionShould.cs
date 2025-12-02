@@ -53,8 +53,7 @@ public class HttpGetMomentsGoogleFunctionShould
         {
             new()
             {
-                Id = new CoreMomentId(1),
-                Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
+                Id = new CoreMomentId(1)
             }
         };
         
@@ -96,8 +95,7 @@ public class HttpGetMomentsGoogleFunctionShould
         {
             new()
             {
-                Id = new CoreMomentId(1),
-                Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow)
+                Id = new CoreMomentId(1)
             }
         };
 

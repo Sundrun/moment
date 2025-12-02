@@ -17,12 +17,5 @@ internal static class ModelBuilderCoreMomentExtension
             .HasConversion(
                 v => v.Id,
                 v => new CoreMomentId(v));
-
-        modelBuilder.Entity<CoreMoment>()
-            .Property(e => e.Timestamp)
-            .ValueGeneratedNever()
-            .HasConversion(
-                v => v.Timestamp,
-                v => new CoreMomentTimestamp(v));
     }
 }

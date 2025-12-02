@@ -14,7 +14,7 @@ public class MomentTimestampsShould : MomentContextBase
         var metadataTimestamp = new MetadataTimestamp();
         await _dbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
         
-        var moment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
+        var moment = new CoreMoment();
         await _dbContext.CoreMoments.AddAsync(moment);
         
         var momentTimestamp = new MomentTimestamp{ Moment = moment, Timestamp = metadataTimestamp };
@@ -42,7 +42,7 @@ public class MomentTimestampsShould : MomentContextBase
         var metadataTimestamp = new MetadataTimestamp();
         await _dbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
         
-        var moment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
+        var moment = new CoreMoment();
         await _dbContext.CoreMoments.AddAsync(moment);
         
         var momentTimestamp = new MomentTimestamp{ Moment = moment, Timestamp = metadataTimestamp };

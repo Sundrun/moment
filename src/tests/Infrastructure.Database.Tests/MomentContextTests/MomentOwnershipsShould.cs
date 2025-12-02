@@ -15,7 +15,7 @@ public class MomentOwnershipsShould : MomentContextBase
         await _dbContext.SaveChangesAsync();
         var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
         
-        var newMoment = new CoreMoment { Timestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow) };
+        var newMoment = new CoreMoment();
         _dbContext.CoreMoments.Add(newMoment);
         
         var newOwnership = new MomentOwnership{ Moment = newMoment, Owner = storedOwner!};

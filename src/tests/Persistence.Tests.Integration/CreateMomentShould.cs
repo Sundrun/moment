@@ -85,14 +85,14 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task StoredMomentShouldBelongToUser()
     {
         // Arrange
-        var expected = _testContext.MomentOwners.FirstAsync();
+        var expected = await _testContext.MomentOwners.FirstAsync();
         
         // Act
         await _dtu.CreateAsync(new ValidToken(_testSubject));
         var momentOwnership = await _testContext.MomentOwnerships.
             Include(momentOwnership => momentOwnership.Owner)
-            .FirstOrDefaultAsync();
-        var result = momentOwnership!.Owner;
+            .FirstAsync();
+        var result = momentOwnership.Owner;
 
         // Assert
         result.Should().BeEquivalentTo(expected);
