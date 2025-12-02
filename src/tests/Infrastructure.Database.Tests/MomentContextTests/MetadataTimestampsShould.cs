@@ -29,8 +29,6 @@ public class MetadataTimestampsShould : MomentContextBase
     public async Task RetrieveExpectedMetadataTimestampDateTime()
     {
         // Arrange
-        var testStartTime = DateTimeOffset.UtcNow;
-        
         var timestamp = new MetadataTimestamp();
         await _dbContext.MetadataTimestamps.AddAsync(timestamp);
         await _dbContext.SaveChangesAsync();
@@ -41,7 +39,7 @@ public class MetadataTimestampsShould : MomentContextBase
         
         
         // Assert
-        result.Should().BeAfter(testStartTime);
+        result.Should().BeAfter(TestStartTime);
         result.Should().BeBefore(DateTimeOffset.MaxValue);
     }
 }

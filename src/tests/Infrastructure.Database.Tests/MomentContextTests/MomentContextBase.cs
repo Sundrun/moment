@@ -8,9 +8,12 @@ public abstract class MomentContextBase : IAsyncLifetime
 {
     private MsSqlContainer _msSqlContainer = null!;
     protected Database.MomentContext _dbContext = null!;
+    protected DateTimeOffset TestStartTime { get; set; }
     
     public async Task InitializeAsync()
     {
+        TestStartTime = DateTimeOffset.UtcNow;
+        
         _msSqlContainer = new MsSqlBuilder()
             .WithPortBinding(1433)
             .Build();
