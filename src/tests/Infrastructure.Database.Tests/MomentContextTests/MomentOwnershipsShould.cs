@@ -11,18 +11,18 @@ public class MomentOwnershipsShould : MomentContextBase
     public async Task RetrieveExpectedMomentOwnership()
     {
         // Arrange
-        _dbContext.MomentOwners.Add(new MomentOwner());
-        await _dbContext.SaveChangesAsync();
-        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        DbContext.MomentOwners.Add(new MomentOwner());
+        await DbContext.SaveChangesAsync();
+        var storedOwner = await DbContext.MomentOwners.FirstOrDefaultAsync();
         
         var newMoment = new CoreMoment();
-        _dbContext.CoreMoments.Add(newMoment);
+        DbContext.CoreMoments.Add(newMoment);
         
         var newOwnership = new MomentOwnership{ Moment = newMoment, Owner = storedOwner!};
-        await _dbContext.MomentOwnerships.AddAsync(newOwnership);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.MomentOwnerships.AddAsync(newOwnership);
+        await DbContext.SaveChangesAsync();
         
-        var storedMoment = await _dbContext.CoreMoments.FirstOrDefaultAsync();
+        var storedMoment = await DbContext.CoreMoments.FirstOrDefaultAsync();
         
         var expected = new MomentOwnership
         {
@@ -34,7 +34,7 @@ public class MomentOwnershipsShould : MomentContextBase
         };
         
         // Act
-        var result = await _dbContext.MomentOwnerships
+        var result = await DbContext.MomentOwnerships
             .Include(x => x.Moment)
             .Include(x => x.Owner)
             .FirstOrDefaultAsync();

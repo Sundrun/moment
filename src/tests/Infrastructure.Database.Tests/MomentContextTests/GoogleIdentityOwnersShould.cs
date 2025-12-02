@@ -11,9 +11,9 @@ public class GoogleIdentityOwnersShould : MomentContextBase
     public async Task StoreExpectedGoogleIdentityOwner()
     {
         // Arrange
-        _dbContext.MomentOwners.Add(new MomentOwner());
-        await _dbContext.SaveChangesAsync();
-        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        DbContext.MomentOwners.Add(new MomentOwner());
+        await DbContext.SaveChangesAsync();
+        var storedOwner = await DbContext.MomentOwners.FirstOrDefaultAsync();
         
         var testSubject = new GoogleIdentitySubject("test-subject");
         var newGoogleIdentity = new GoogleIdentity { Subject = testSubject };
@@ -22,11 +22,11 @@ public class GoogleIdentityOwnersShould : MomentContextBase
             Owner = storedOwner!,
             GoogleIdentity = newGoogleIdentity
         };
-        await _dbContext.GoogleIdentities.AddAsync(newGoogleIdentity);
-        await _dbContext.GoogleIdentityOwners.AddAsync(newGoogleIdentityOwner);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.GoogleIdentities.AddAsync(newGoogleIdentity);
+        await DbContext.GoogleIdentityOwners.AddAsync(newGoogleIdentityOwner);
+        await DbContext.SaveChangesAsync();
         
-        var storedGoogleIdentity = await _dbContext.GoogleIdentities.FirstOrDefaultAsync();
+        var storedGoogleIdentity = await DbContext.GoogleIdentities.FirstOrDefaultAsync();
         
         var expected = new GoogleIdentityOwner
         {
@@ -38,7 +38,7 @@ public class GoogleIdentityOwnersShould : MomentContextBase
         };
         
         // Act
-        var result = await _dbContext.GoogleIdentityOwners
+        var result = await DbContext.GoogleIdentityOwners
             .Include(x => x.Owner)
             .FirstOrDefaultAsync();
         

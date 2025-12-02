@@ -12,13 +12,13 @@ public class CoreMomentsShould : MomentContextBase
     {
         // Arrange
         var newMoment = new CoreMoment();
-        await _dbContext.CoreMoments.AddAsync(newMoment);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.CoreMoments.AddAsync(newMoment);
+        await DbContext.SaveChangesAsync();
         
         var expected = new CoreMoment{Id = new CoreMomentId(1)};
         
         // Act
-        var result = await _dbContext.CoreMoments.FirstOrDefaultAsync();
+        var result = await DbContext.CoreMoments.FirstOrDefaultAsync();
         
         // Assert
         result.Should().BeEquivalentTo(expected);

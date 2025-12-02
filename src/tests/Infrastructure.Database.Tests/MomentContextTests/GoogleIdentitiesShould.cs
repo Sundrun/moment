@@ -11,9 +11,9 @@ public class GoogleIdentitiesShould : MomentContextBase
     public async Task StoreExpectedGoogleIdentity()
     {
         // Arrange
-        _dbContext.MomentOwners.Add(new MomentOwner());
-        await _dbContext.SaveChangesAsync();
-        var storedOwner = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        DbContext.MomentOwners.Add(new MomentOwner());
+        await DbContext.SaveChangesAsync();
+        var storedOwner = await DbContext.MomentOwners.FirstOrDefaultAsync();
         
         var testSubject = new GoogleIdentitySubject("test-subject");
         var newGoogleIdentity = new GoogleIdentity { Subject = testSubject };
@@ -22,14 +22,14 @@ public class GoogleIdentitiesShould : MomentContextBase
             Owner = storedOwner!,
             GoogleIdentity = newGoogleIdentity
         };
-        await _dbContext.GoogleIdentities.AddAsync(newGoogleIdentity);
-        await _dbContext.GoogleIdentityOwners.AddAsync(newGoogleIdentityOwner);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.GoogleIdentities.AddAsync(newGoogleIdentity);
+        await DbContext.GoogleIdentityOwners.AddAsync(newGoogleIdentityOwner);
+        await DbContext.SaveChangesAsync();
         
         var expected = new GoogleIdentity { Id = new GoogleIdentityId(1), Subject = testSubject };
         
         // Act
-        var result = await _dbContext.GoogleIdentities.FirstOrDefaultAsync();
+        var result = await DbContext.GoogleIdentities.FirstOrDefaultAsync();
         
         // Assert
         result.Should().BeEquivalentTo(expected);
@@ -39,29 +39,29 @@ public class GoogleIdentitiesShould : MomentContextBase
     public async Task NotAllowDuplicateGoogleIdentities()
     {
         // Arrange
-        _dbContext.MomentOwners.Add(new MomentOwner());
-        _dbContext.MomentOwners.Add(new MomentOwner());
-        await _dbContext.SaveChangesAsync();
+        DbContext.MomentOwners.Add(new MomentOwner());
+        DbContext.MomentOwners.Add(new MomentOwner());
+        await DbContext.SaveChangesAsync();
         
-        var ownerOne = await _dbContext.MomentOwners.FirstAsync(x => x.Id == new MomentOwnerId(1));
-        var ownerTwo = await _dbContext.MomentOwners.FirstAsync(x => x.Id == new MomentOwnerId(2));
+        var ownerOne = await DbContext.MomentOwners.FirstAsync(x => x.Id == new MomentOwnerId(1));
+        var ownerTwo = await DbContext.MomentOwners.FirstAsync(x => x.Id == new MomentOwnerId(2));
         
         var testSubject = new GoogleIdentitySubject("test-subject");
         var googleIdentity = new GoogleIdentity { Subject = testSubject };
         var googleIdentityOwner = new GoogleIdentityOwner { Owner = ownerOne, GoogleIdentity = googleIdentity };
 
-        await _dbContext.GoogleIdentities.AddAsync(googleIdentity);
-        await _dbContext.GoogleIdentityOwners.AddAsync(googleIdentityOwner);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.GoogleIdentities.AddAsync(googleIdentity);
+        await DbContext.GoogleIdentityOwners.AddAsync(googleIdentityOwner);
+        await DbContext.SaveChangesAsync();
         
         var duplicateGoogleIdentity = new GoogleIdentity { Subject = testSubject };
         var duplicateGoogleIdentityOwner = new GoogleIdentityOwner { Owner = ownerTwo, GoogleIdentity = duplicateGoogleIdentity};
         
-        await _dbContext.GoogleIdentities.AddAsync(duplicateGoogleIdentity);
-        await _dbContext.GoogleIdentityOwners.AddAsync(duplicateGoogleIdentityOwner);
+        await DbContext.GoogleIdentities.AddAsync(duplicateGoogleIdentity);
+        await DbContext.GoogleIdentityOwners.AddAsync(duplicateGoogleIdentityOwner);
         
         // Act
-        var dbSaveTask = async () => await _dbContext.SaveChangesAsync();
+        var dbSaveTask = async () => await DbContext.SaveChangesAsync();
         
         // Assert
         await dbSaveTask.Should().ThrowAsync<DbUpdateException>();

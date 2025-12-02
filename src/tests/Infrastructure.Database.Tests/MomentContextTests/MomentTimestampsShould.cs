@@ -11,20 +11,20 @@ public class MomentTimestampsShould : MomentContextBase
     {
         // Arrange
         var metadataTimestamp = new MetadataTimestamp();
-        await _dbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
+        await DbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
         
         var moment = new CoreMoment();
-        await _dbContext.CoreMoments.AddAsync(moment);
+        await DbContext.CoreMoments.AddAsync(moment);
         
         var momentTimestamp = new MomentTimestamp{ Moment = moment, Timestamp = metadataTimestamp };
-        await _dbContext.MomentTimestamps.AddAsync(momentTimestamp);
+        await DbContext.MomentTimestamps.AddAsync(momentTimestamp);
         
-        await _dbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         
-        var expected = await _dbContext.MetadataTimestamps.FirstAsync();
+        var expected = await DbContext.MetadataTimestamps.FirstAsync();
         
         // Act
-        var storedMomentTimestamp = await _dbContext.MomentTimestamps
+        var storedMomentTimestamp = await DbContext.MomentTimestamps
             .Include(x => x.Moment)
             .Include(x => x.Timestamp)
             .FirstAsync();
@@ -39,20 +39,20 @@ public class MomentTimestampsShould : MomentContextBase
     {
         // Arrange
         var metadataTimestamp = new MetadataTimestamp();
-        await _dbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
+        await DbContext.MetadataTimestamps.AddAsync(metadataTimestamp);
         
         var moment = new CoreMoment();
-        await _dbContext.CoreMoments.AddAsync(moment);
+        await DbContext.CoreMoments.AddAsync(moment);
         
         var momentTimestamp = new MomentTimestamp{ Moment = moment, Timestamp = metadataTimestamp };
-        await _dbContext.MomentTimestamps.AddAsync(momentTimestamp);
+        await DbContext.MomentTimestamps.AddAsync(momentTimestamp);
         
-        await _dbContext.SaveChangesAsync();
+        await DbContext.SaveChangesAsync();
         
-        var expected = await _dbContext.CoreMoments.FirstAsync();
+        var expected = await DbContext.CoreMoments.FirstAsync();
         
         // Act
-        var storedMomentTimestamp = await _dbContext.MomentTimestamps
+        var storedMomentTimestamp = await DbContext.MomentTimestamps
             .Include(x => x.Moment)
             .Include(x => x.Timestamp)
             .FirstAsync();

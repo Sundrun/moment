@@ -11,13 +11,13 @@ public class MetadataTimestampsShould : MomentContextBase
     {
         // Arrange
         var timestamp = new MetadataTimestamp();
-        await _dbContext.MetadataTimestamps.AddAsync(timestamp);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.MetadataTimestamps.AddAsync(timestamp);
+        await DbContext.SaveChangesAsync();
 
         const long expected = 1;
         
         // Act
-        var storedTimestamp = await _dbContext.MetadataTimestamps.FirstAsync();
+        var storedTimestamp = await DbContext.MetadataTimestamps.FirstAsync();
         var result = storedTimestamp.Id.Id;
         
         // Assert
@@ -29,11 +29,11 @@ public class MetadataTimestampsShould : MomentContextBase
     {
         // Arrange
         var timestamp = new MetadataTimestamp();
-        await _dbContext.MetadataTimestamps.AddAsync(timestamp);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.MetadataTimestamps.AddAsync(timestamp);
+        await DbContext.SaveChangesAsync();
         
         // Act
-        var storedTimestamp = await _dbContext.MetadataTimestamps.FirstAsync();
+        var storedTimestamp = await DbContext.MetadataTimestamps.FirstAsync();
         var result = storedTimestamp.Timestamp.Timestamp;
         
         

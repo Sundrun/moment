@@ -12,13 +12,13 @@ public class MomentOwnersShould : MomentContextBase
     {
         // Arrange
         var newOwner = new MomentOwner();
-        await _dbContext.MomentOwners.AddAsync(newOwner);
-        await _dbContext.SaveChangesAsync();
+        await DbContext.MomentOwners.AddAsync(newOwner);
+        await DbContext.SaveChangesAsync();
 
         var expected = new MomentOwner{Id = new MomentOwnerId(1)};
         
         // Act
-        var result = await _dbContext.MomentOwners.FirstOrDefaultAsync();
+        var result = await DbContext.MomentOwners.FirstOrDefaultAsync();
         
         // Assert
         result.Should().BeEquivalentTo(expected);

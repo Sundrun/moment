@@ -7,7 +7,7 @@ namespace Infrastructure.Database.Tests.MomentContextTests;
 public abstract class MomentContextBase : IAsyncLifetime
 {
     private MsSqlContainer _msSqlContainer = null!;
-    protected Database.MomentContext _dbContext = null!;
+    protected Database.MomentContext DbContext = null!;
     protected DateTimeOffset TestStartTime { get; set; }
     
     public async Task InitializeAsync()
@@ -25,8 +25,8 @@ public abstract class MomentContextBase : IAsyncLifetime
         var optionsBuilder = new DbContextOptionsBuilder<Database.MomentContext>()
             .UseSqlServer(connectionString);
         
-        _dbContext = new Database.MomentContext(optionsBuilder.Options);
-        await _dbContext.Database.EnsureCreatedAsync();
+        DbContext = new Database.MomentContext(optionsBuilder.Options);
+        await DbContext.Database.EnsureCreatedAsync();
     }
 
     public async Task DisposeAsync()
