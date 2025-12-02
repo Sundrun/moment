@@ -9,6 +9,7 @@ public class MomentContext(DbContextOptions<MomentContext> options) : DbContext(
     public DbSet<MetadataTimestamp> MetadataTimestamps { get; set; }
     public DbSet<MomentOwner> MomentOwners { get; set; }
     public DbSet<MomentOwnership> MomentOwnerships { get; set; }
+    public DbSet<MomentTimestamp> MomentTimestamps { get; set; }
     public DbSet<GoogleIdentity> GoogleIdentities{ get; set; }
     public DbSet<GoogleIdentityOwner> GoogleIdentityOwners { get; set; }
 
@@ -18,6 +19,7 @@ public class MomentContext(DbContextOptions<MomentContext> options) : DbContext(
         modelBuilder.BuilderMetadataTimestamp();
         modelBuilder.BuildMomentOwner();
         modelBuilder.BuildMomentOwnership();
+        modelBuilder.BuildMomentTimestamp();
         modelBuilder.BuildGoogleIdentity();
         modelBuilder.BuildGoogleIdentityOwners();
 
