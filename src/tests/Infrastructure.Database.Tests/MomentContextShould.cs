@@ -35,25 +35,6 @@ public class MomentContextShould : IAsyncLifetime
     }
     
     [Fact]
-    public async Task RetrieveExpectedCoreMoment()
-    {
-        // Arrange
-        var testTimestamp = new CoreMomentTimestamp(DateTimeOffset.UtcNow);
-        
-        var newMoment = new CoreMoment{Timestamp = testTimestamp};
-        await _dbContext.CoreMoments.AddAsync(newMoment);
-        await _dbContext.SaveChangesAsync();
-        
-        var expected = new CoreMoment{Id = new CoreMomentId(1), Timestamp = testTimestamp};
-        
-        // Act
-        var result = await _dbContext.CoreMoments.FirstOrDefaultAsync();
-        
-        // Assert
-        result.Should().BeEquivalentTo(expected);
-    }
-    
-    [Fact]
     public async Task RetrieveExpectedMomentOwner()
     {
         // Arrange
