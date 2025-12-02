@@ -1,6 +1,5 @@
 using AwesomeAssertions;
 using Entities;
-using Entities.Wrappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Tests.MomentContextTests;
