@@ -55,6 +55,6 @@ internal static class ModelBuilderMomentTimestampExtension
         modelBuilder.Entity<MomentTimestamp>()
             .HasOne<CoreMoment>(o => o.Moment)
             .WithOne()
-            .HasForeignKey<MomentOwnership>(o => o.MomentId);
+            .HasForeignKey<MomentTimestamp>(o => o.MomentId);
     }
 }
