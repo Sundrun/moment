@@ -21,7 +21,6 @@ public class MetadataTimestampsShould : MomentContextBase
         var storedTimestamp = await _dbContext.MetadataTimestamps.FirstAsync();
         var result = storedTimestamp.Id.Id;
         
-        
         // Assert
         result.Should().Be(expected);
     }
