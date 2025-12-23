@@ -4,5 +4,5 @@ namespace Operations.Queries.GetMoments;
 
 public interface IGetMoments
 {
-    Task<IGetMomentsResponse> GetMomentsAsync(ValidToken token);
+    Task<IGetMomentsResponse> GetMomentsAsync(ValidToken token, CancellationToken cancellationToken);
 }
