@@ -39,7 +39,7 @@ public class MomentApiCreateUserGoogleShould: HttpFunctionFixture<ValidateTokenN
         var function = GetService<HttpCreateUserGoogleFunction>();
         
         // Act
-        var response = await function.CreateUserGoogle(httpRequest);
+        var response = await function.CreateUserGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
         
         // Assert
