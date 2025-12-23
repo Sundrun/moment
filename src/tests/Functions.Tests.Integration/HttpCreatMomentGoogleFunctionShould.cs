@@ -32,7 +32,7 @@ public class HttpCreateMomentGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateMomentGoogle(httpRequest);
+        var response = await func.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
 
         // Assert
@@ -47,7 +47,7 @@ public class HttpCreateMomentGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createMoment = Substitute.For<ICreateMoment>();
-        createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new MomentCreated());
+        createMoment.CreateAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new MomentCreated());
         
         var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
@@ -64,7 +64,7 @@ public class HttpCreateMomentGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.CreateMomentGoogle(httpRequest);
+        var response = await func.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -79,7 +79,7 @@ public class HttpCreateMomentGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createMoment = Substitute.For<ICreateMoment>();
-        createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new NoUser());
+        createMoment.CreateAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new NoUser());
         
         var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
@@ -96,7 +96,7 @@ public class HttpCreateMomentGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.CreateMomentGoogle(httpRequest);
+        var response = await func.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -127,7 +127,7 @@ public class HttpCreateMomentGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.CreateMomentGoogle(httpRequest);
+        var response = await func.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -142,7 +142,7 @@ public class HttpCreateMomentGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var createMoment = Substitute.For<ICreateMoment>();
-        createMoment.CreateAsync(Arg.Any<ValidToken>()).Returns(new TestCreateMomentResponse());
+        createMoment.CreateAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new TestCreateMomentResponse());
         
         var func = new HttpCreateMomentGoogleFunction(validateToken, createMoment);
         
@@ -159,7 +159,7 @@ public class HttpCreateMomentGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.CreateMomentGoogle(httpRequest);
+        var response = await func.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert

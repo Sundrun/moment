@@ -100,6 +100,6 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         var createMoment = new CreateMoment(_context);
 
         var validToken = new ValidToken(DefaultTestValidateToken.TestSubject);
-        await createMoment.CreateAsync(validToken);
+        await createMoment.CreateAsync(validToken, CancellationToken.None);
     }
 }

@@ -4,5 +4,5 @@ namespace Operations.Commands.CreateMoment;
 
 public interface ICreateMoment
 {
-    Task<ICreateMomentResponse> CreateAsync(ValidToken token);
+    Task<ICreateMomentResponse> CreateAsync(ValidToken token, CancellationToken cancellationToken);
 }

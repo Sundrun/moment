@@ -10,7 +10,9 @@ namespace Functions.Functions;
 public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreateMoment createMoment) : IHttpFunction
 {
     [Function(nameof(CreateMomentGoogle))]
-    public async Task<HttpResponseData> CreateMomentGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
+    public async Task<HttpResponseData> CreateMomentGoogle(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request,
+        CancellationToken cancellationToken)
     {
         if (!request.TryExtractToken(out var token))
         {
@@ -23,7 +25,7 @@ public class HttpCreateMomentGoogleFunction(IValidateToken validateToken, ICreat
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        var createUserResult =  await createMoment.CreateAsync(validToken);
+        var createUserResult =  await createMoment.CreateAsync(validToken, cancellationToken);
         return createUserResult switch
         {
             MomentCreated => request.CreateResponse(HttpStatusCode.Created),
