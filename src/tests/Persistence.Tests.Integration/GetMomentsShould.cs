@@ -67,7 +67,7 @@ public class GetMomentsShould : IAsyncLifetime
     public async Task IndicateIfUserHasNoMoments()
     {
         // Act
-        var result = await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
+        var result = await _dtu.GetMomentsAsync(new ValidToken(_testSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeOfType<NoMoments>();
@@ -96,7 +96,7 @@ public class GetMomentsShould : IAsyncLifetime
         var expected = new UserMoments([expectedCoreMoment]);
         
         // Act
-        var result = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
+        var result = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeEquivalentTo(expected);
@@ -127,7 +127,7 @@ public class GetMomentsShould : IAsyncLifetime
         await _testContext.SaveChangesAsync();
 
         // Act
-        var response = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
+        var response = (UserMoments)await _dtu.GetMomentsAsync(new ValidToken(_testSubject), CancellationToken.None);
         var result = response.Moments.Count();
 
         // Assert
@@ -169,7 +169,7 @@ public class GetMomentsShould : IAsyncLifetime
         await _testContext.SaveChangesAsync();
         
         // Act
-        var result = await _dtu.GetMomentsAsync(new ValidToken(_testSubject));
+        var result = await _dtu.GetMomentsAsync(new ValidToken(_testSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeOfType<NoMoments>();
@@ -180,7 +180,7 @@ public class GetMomentsShould : IAsyncLifetime
     {
         // Act
         var nonUserSubject = new GoogleIdentitySubject("NonUserSubject");
-        var result = await _dtu.GetMomentsAsync(new ValidToken(nonUserSubject));
+        var result = await _dtu.GetMomentsAsync(new ValidToken(nonUserSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeOfType<NoUser>();

@@ -35,7 +35,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
 
         // Assert
@@ -58,7 +58,7 @@ public class HttpGetMomentsGoogleFunctionShould
         };
         
         var createMoment = Substitute.For<IGetMoments>();
-        createMoment.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new UserMoments(moments));
+        createMoment.GetMomentsAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new UserMoments(moments));
         
         var func = new HttpGetMomentsGoogleFunction(validateToken, createMoment);
         
@@ -77,7 +77,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -102,7 +102,7 @@ public class HttpGetMomentsGoogleFunctionShould
         var expected = JsonSerializer.Serialize(moments);
         
         var getMoments = Substitute.For<IGetMoments>();
-        getMoments.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new UserMoments(moments));
+        getMoments.GetMomentsAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new UserMoments(moments));
         
         var func = new HttpGetMomentsGoogleFunction(validateToken, getMoments);
         
@@ -121,7 +121,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        await func.GetMomentsGoogle(httpRequest);
+        await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         
         bodyStream.Position = 0;
         using var reader = new StreamReader(bodyStream);
@@ -139,7 +139,7 @@ public class HttpGetMomentsGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var getMoments = Substitute.For<IGetMoments>();
-        getMoments.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new NoMoments());
+        getMoments.GetMomentsAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new NoMoments());
         
         var func = new HttpGetMomentsGoogleFunction(validateToken, getMoments);
         
@@ -157,7 +157,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -172,7 +172,7 @@ public class HttpGetMomentsGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var getMoments = Substitute.For<IGetMoments>();
-        getMoments.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new NoUser());
+        getMoments.GetMomentsAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new NoUser());
         
         var func = new HttpGetMomentsGoogleFunction(validateToken, getMoments);
         
@@ -190,7 +190,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -222,7 +222,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
         
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert
@@ -237,7 +237,7 @@ public class HttpGetMomentsGoogleFunctionShould
         validateToken.ValidateTokenAsync(Arg.Any<string>()).Returns(new ValidToken(new GoogleIdentitySubject(string.Empty)));
         
         var getMoments = Substitute.For<IGetMoments>();
-        getMoments.GetMomentsAsync(Arg.Any<ValidToken>()).Returns(new TestGetMomentsResponse());
+        getMoments.GetMomentsAsync(Arg.Any<ValidToken>(), Arg.Any<CancellationToken>()).Returns(new TestGetMomentsResponse());
         
         var func = new HttpGetMomentsGoogleFunction(validateToken, getMoments);
         
@@ -255,7 +255,7 @@ public class HttpGetMomentsGoogleFunctionShould
         httpRequest.CreateResponse().Returns(httpResponse);
     
         // Act
-        var response = await func.GetMomentsGoogle(httpRequest);
+        var response = await func.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
     
         // Assert

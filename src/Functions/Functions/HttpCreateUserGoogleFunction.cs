@@ -11,7 +11,9 @@ namespace Functions.Functions;
 public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateUser createUser) : IHttpFunction
 {
     [Function(nameof(CreateUserGoogle))]
-    public async Task<HttpResponseData> CreateUserGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request)
+    public async Task<HttpResponseData> CreateUserGoogle(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData request,
+        CancellationToken cancellationToken)
     {
         if (!request.TryExtractToken(out var token))
         {
@@ -24,7 +26,7 @@ public class HttpCreateUserGoogleFunction(IValidateToken validateToken, ICreateU
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        var createUserResult =  await createUser.CreateAsync(validToken);
+        var createUserResult =  await createUser.CreateAsync(validToken, cancellationToken);
         return createUserResult switch
         {
             UserCreated => request.CreateResponse(HttpStatusCode.Created),

@@ -9,7 +9,7 @@ namespace Persistence;
 public class CreateUser(MomentContext context) : ICreateUser
 {
     
-    public async Task<ICreateUserResponse> CreateAsync(ValidToken token)
+    public async Task<ICreateUserResponse> CreateAsync(ValidToken token, CancellationToken cancellationToken)
     {
         if (HasAlreadyBeenCreated(token))
         {
@@ -17,7 +17,7 @@ public class CreateUser(MomentContext context) : ICreateUser
         }
         
         var owner = new MomentOwner();
-        await context.MomentOwners.AddAsync(owner);
+        await context.MomentOwners.AddAsync(owner, cancellationToken);
         
         var identity = new GoogleIdentity
         {
@@ -28,10 +28,10 @@ public class CreateUser(MomentContext context) : ICreateUser
             Owner = owner,
             GoogleIdentity = identity
         };
-        await context.GoogleIdentities.AddAsync(identity);
-        await context.GoogleIdentityOwners.AddAsync(identityOwner);
+        await context.GoogleIdentities.AddAsync(identity, cancellationToken);
+        await context.GoogleIdentityOwners.AddAsync(identityOwner, cancellationToken);
         
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
 
         return new UserCreated();
     }

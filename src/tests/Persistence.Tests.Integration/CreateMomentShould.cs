@@ -63,7 +63,7 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task StoreMoment()
     {
         // Act
-        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        await _dtu.CreateAsync(new ValidToken(_testSubject), CancellationToken.None);
         var result = await _testContext.CoreMoments.FirstAsync();
 
         // Assert
@@ -74,7 +74,7 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task StoreMomentTimestamp()
     {
         // Act
-        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        await _dtu.CreateAsync(new ValidToken(_testSubject), CancellationToken.None);
         var result = await _testContext.MomentTimestamps.FirstAsync();
 
         // Assert
@@ -88,7 +88,7 @@ public class CreateMomentShould : IAsyncLifetime
         var expected = await _testContext.MomentOwners.FirstAsync();
         
         // Act
-        await _dtu.CreateAsync(new ValidToken(_testSubject));
+        await _dtu.CreateAsync(new ValidToken(_testSubject), CancellationToken.None);
         var momentOwnership = await _testContext.MomentOwnerships.
             Include(momentOwnership => momentOwnership.Owner)
             .FirstAsync();
@@ -102,7 +102,7 @@ public class CreateMomentShould : IAsyncLifetime
     public async Task IndicateThatAMomentWasCreated()
     {
         // Act
-        var result = await _dtu.CreateAsync(new ValidToken(_testSubject));
+        var result = await _dtu.CreateAsync(new ValidToken(_testSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeOfType<MomentCreated>();
@@ -113,7 +113,7 @@ public class CreateMomentShould : IAsyncLifetime
     {
         // Act
         var nonUserSubject = new GoogleIdentitySubject("NonUserSubject");
-        var result = await _dtu.CreateAsync(new ValidToken(nonUserSubject));
+        var result = await _dtu.CreateAsync(new ValidToken(nonUserSubject), CancellationToken.None);
 
         // Assert
         result.Should().BeOfType<NoUser>();

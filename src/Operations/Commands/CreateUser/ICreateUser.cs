@@ -5,5 +5,5 @@ namespace Operations.Commands.CreateUser;
 
 public interface ICreateUser
 {
-    Task<ICreateUserResponse> CreateAsync(ValidToken token);
+    Task<ICreateUserResponse> CreateAsync(ValidToken token,  CancellationToken cancellationToken);
 }

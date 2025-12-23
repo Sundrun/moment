@@ -11,7 +11,9 @@ namespace Functions.Functions;
 public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMoments getMoments) : IHttpFunction
 {
     [Function(nameof(GetMomentsGoogle))]
-    public async Task<HttpResponseData> GetMomentsGoogle([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData request)
+    public async Task<HttpResponseData> GetMomentsGoogle(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData request,
+        CancellationToken cancellationToken)
     {
         if (!request.TryExtractToken(out var token))
         {
@@ -24,7 +26,7 @@ public class HttpGetMomentsGoogleFunction(IValidateToken validateToken, IGetMome
             return request.CreateResponse(HttpStatusCode.Unauthorized);
         }
         
-        var getMomentsResult =  await getMoments.GetMomentsAsync(validToken);
+        var getMomentsResult =  await getMoments.GetMomentsAsync(validToken, cancellationToken);
         if (getMomentsResult is NoUser)
         {
             return request.CreateResponse(HttpStatusCode.BadRequest);

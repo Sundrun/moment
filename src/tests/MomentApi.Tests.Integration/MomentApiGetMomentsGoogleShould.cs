@@ -51,7 +51,7 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         var function = GetService<HttpGetMomentsGoogleFunction>();
         
         // Act
-        var response = await function.GetMomentsGoogle(httpRequest);
+        var response = await function.GetMomentsGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
         
         // Assert
@@ -86,7 +86,7 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         var function = GetService<HttpGetMomentsGoogleFunction>();
         
         // Act
-        await function.GetMomentsGoogle(httpRequest);
+        await function.GetMomentsGoogle(httpRequest, CancellationToken.None);
         
         bodyStream.Position = 0;
         var result = await JsonSerializer.DeserializeAsync<IEnumerable<Entities.CoreMoment>>(bodyStream);
@@ -100,6 +100,6 @@ public class MomentApiGetMomentsGoogleShould: HttpFunctionFixture<DefaultTestVal
         var createMoment = new CreateMoment(_context);
 
         var validToken = new ValidToken(DefaultTestValidateToken.TestSubject);
-        await createMoment.CreateAsync(validToken);
+        await createMoment.CreateAsync(validToken, CancellationToken.None);
     }
 }

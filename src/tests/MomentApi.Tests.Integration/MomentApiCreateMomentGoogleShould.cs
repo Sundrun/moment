@@ -30,7 +30,7 @@ public class MomentApiCreateMomentGoogleShould: HttpFunctionFixture<DefaultTestV
         var function = GetService<HttpCreateMomentGoogleFunction>();
         
         // Act
-        var response = await function.CreateMomentGoogle(httpRequest);
+        var response = await function.CreateMomentGoogle(httpRequest, CancellationToken.None);
         var result = response.StatusCode;
         
         // Assert
